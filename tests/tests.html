@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Engine Tests</title>
+<style>
+  :root { --bg:#fff; --fg:#111; --ok:#0a7a33; --bad:#c62828; --muted:#666; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#111; --fg:#eee; --ok:#4caf50; --bad:#ef5350; --muted:#999; } }
+  body { background:var(--bg); color:var(--fg); font:14px/1.4 -apple-system, system-ui, sans-serif; margin:16px; }
+  .ok { color:var(--ok); } .bad { color:var(--bad); } .muted { color:var(--muted); }
+  li { margin:4px 0; } pre { white-space:pre-wrap; font-size:12px; }
+</style>
+</head>
+<body>
+<h1>Rating engine tests</h1>
+<p id="summary" class="muted">Running… (serve the project folder over HTTP and open /tests/tests.html)</p>
+<ul id="list"></ul>
+<script>
+/* Loads the engine straight out of ../index.html (single source of truth)
+   and checks it against reference values from the Python trueskill package
+   plus property tests. Results are also exposed as window.__testResults. */
+(async function () {
+  const results = [];
+  const list = document.getElementById('list');
+  function record(name, pass, detail) {
+    results.push({ name, pass, detail: detail || '' });
+    const li = document.createElement('li');
+    li.innerHTML = `<span class="${pass ? 'ok' : 'bad'}">${pass ? 'PASS' : 'FAIL'}</span> ${name}` +
+      (detail ? ` <span class="muted">— ${detail}</span>` : '');
+    list.appendChild(li);
+  }
+  function test(name, fn) {
+    try { const d = fn(); record(name, true, typeof d === 'string' ? d : ''); }
+    catch (e) { record(name, false, e.message); }
+  }
+  function assert(cond, msg) { if (!cond) throw new Error(msg || 'assertion failed'); }
+  function close(a, b, tol, label) {
+    if (!(Math.abs(a - b) <= tol)) throw new Error(`${label || ''} expected ${b}, got ${a} (|diff|=${Math.abs(a - b)})`);
+  }
+
+  let E, ref;
+  try {
+    const html = await (await fetch('../index.html', { cache: 'no-store' })).text();
+    const m = html.match(/<script id="rating-engine">([\s\S]*?)<\/script>/);
+    if (!m) throw new Error('engine script block not found in index.html');
+    // Sanity: the engine block must not touch the DOM or storage.
+    const forbidden = /\b(document|window|localStorage|sessionStorage|indexedDB|fetch|XMLHttpRequest)\b/;
+    const codeOnly = m[1].replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/.*$/gm, '');
+    record('Engine block is UI-free (no document/window/storage/network references)', !forbidden.test(codeOnly),
+      forbidden.test(codeOnly) ? 'found: ' + codeOnly.match(forbidden)[0] : '');
+    E = new Function(m[1] + '\nreturn RatingEngine;')();
+    ref = await (await fetch('reference.json', { cache: 'no-store' })).json();
+  } catch (e) {
+    record('Load engine and reference data', false, e.message);
+    finish(); return;
+  }
+
+  const cfg = E.withDefaults({});
+  const TOL = 1e-9;
+
+  /* ---------- Known 1v1 values ---------- */
+  test('Known 1v1: winner ≈ 29.396 / 7.171, loser ≈ 20.604 / 7.171', () => {
+    const out = E.rateTeams([[{ mu: 25, sigma: 25 / 3 }], [{ mu: 25, sigma: 25 / 3 }]], [0, 1], cfg);
+    close(out[0][0].mu, 29.396, 5e-4, 'winner mu'); close(out[0][0].sigma, 7.171, 5e-4, 'winner sigma');
+    close(out[1][0].mu, 20.604, 5e-4, 'loser mu'); close(out[1][0].sigma, 7.171, 5e-4, 'loser sigma');
+    return `winner ${out[0][0].mu.toFixed(6)} / ${out[0][0].sigma.toFixed(6)}, loser ${out[1][0].mu.toFixed(6)} / ${out[1][0].sigma.toFixed(6)}`;
+  });
+
+  /* ---------- Python trueskill reference cases ---------- */
+  ref.cases.forEach(c => {
+    test(`Matches Python trueskill: ${c.name}`, () => {
+      const env = Object.assign({}, cfg, { drawProbability: c.drawProbability });
+      const out = E.rateTeams(c.teams, c.ranks, env);
+      let maxErr = 0;
+      c.expected.forEach((team, t) => team.forEach((r, i) => {
+        close(out[t][i].mu, r.mu, TOL, `team ${t} player ${i} mu`);
+        close(out[t][i].sigma, r.sigma, TOL, `team ${t} player ${i} sigma`);
+        maxErr = Math.max(maxErr, Math.abs(out[t][i].mu - r.mu), Math.abs(out[t][i].sigma - r.sigma));
+      }));
+      return `max |err| = ${maxErr.toExponential(2)}`;
+    });
+  });
+
+  test('End-to-end replay (margin + weights + ordering + per-game target) matches independent Python replay', () => {
+    const rep = E.replayHistory(ref.replay.data);
+    assert(rep.errors.length === 0, 'replay errors: ' + JSON.stringify(rep.errors));
+    let maxErr = 0;
+    for (const id in ref.replay.expected) {
+      close(rep.ratings[id].mu, ref.replay.expected[id].mu, TOL, id + ' mu');
+      close(rep.ratings[id].sigma, ref.replay.expected[id].sigma, TOL, id + ' sigma');
+      maxErr = Math.max(maxErr, Math.abs(rep.ratings[id].mu - ref.replay.expected[id].mu));
+    }
+    return `7 games, max |err| = ${maxErr.toExponential(2)}`;
+  });
+
+  /* ---------- Property tests ---------- */
+  const D = () => ({ mu: 25, sigma: 25 / 3 });
+  let seed = 12345;
+  function rand() { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; }
+  function randRating() { return { mu: 15 + rand() * 20, sigma: 1 + rand() * 7.3 }; }
+
+  test('Effective weight 1.0 equals plain TrueSkill (exactly)', () => {
+    for (let k = 0; k < 50; k++) {
+      const teams = [[randRating(), randRating()], [randRating()], [randRating(), randRating(), randRating()]];
+      const ranks = [Math.floor(rand() * 3), Math.floor(rand() * 3), Math.floor(rand() * 3)];
+      const ts = E.rateTeams(teams, ranks, cfg);
+      teams.forEach((team, t) => team.forEach((p, i) => {
+        const u = E.applyWeightedUpdate(p, ts[t][i], 1, cfg);
+        assert(u.mu === ts[t][i].mu, 'mu differs');
+        assert(u.sigma === Math.max(cfg.sigmaFloor, ts[t][i].sigma), 'sigma differs');
+      }));
+    }
+    // Through rateGame: a full draw has marginFactor 1, so typeWeight 1 => w = 1
+    const g = E.rateGame({ teams: [{ score: 9, players: [{ id: 'a', ...D() }] }, { score: 9, players: [{ id: 'b', ...D() }] }],
+      scoringTarget: 15, typeWeight: 1, config: cfg });
+    assert(g.weight === 1, 'weight should be 1');
+    const plain = E.rateTeams([[D()], [D()]], [0, 0], cfg);
+    assert(g.updates[0].mu === plain[0][0].mu && g.updates[0].sigma === plain[0][0].sigma, 'rateGame != plain TrueSkill');
+    return '50 random multi-team games + rateGame draw';
+  });
+
+  test('Weight 0 changes nothing', () => {
+    const g = E.rateGame({ teams: [{ score: 15, players: [{ id: 'a', mu: 27, sigma: 4 }, { id: 'b', mu: 22, sigma: 6 }] },
+                                   { score: 2, players: [{ id: 'c', mu: 25, sigma: 3 }] }],
+      scoringTarget: 15, typeWeight: 0, config: cfg });
+    assert(g.weight === 0, 'weight should be 0');
+    g.updates.forEach(u => { assert(u.mu === u.oldMu && u.sigma === u.oldSigma, `${u.id} changed`); });
+  });
+
+  test('Blowout moves ratings more than a close game of the same type', () => {
+    const mk = (s1, s2) => E.rateGame({
+      teams: [{ score: s1, players: [{ id: 'a', ...D() }, { id: 'b', mu: 28, sigma: 5 }] },
+              { score: s2, players: [{ id: 'c', ...D() }, { id: 'd', mu: 23, sigma: 6 }] }],
+      scoringTarget: 15, typeWeight: 1.0, config: cfg });
+    const blow = mk(15, 3), tight = mk(15, 14);
+    assert(blow.weight > tight.weight, 'blowout weight should be larger');
+    blow.updates.forEach((u, i) => {
+      const t = tight.updates[i];
+      assert(Math.abs(u.mu - u.oldMu) > Math.abs(t.mu - t.oldMu), `${u.id}: |Δmu| not larger`);
+      assert(Math.abs(u.sigma - u.oldSigma) > Math.abs(t.sigma - t.oldSigma), `${u.id}: |Δσ| not larger`);
+    });
+    return `w blowout ${blow.weight.toFixed(3)} vs close ${tight.weight.toFixed(3)}`;
+  });
+
+  // Holds for a team that is alone in first / last place. A team that SHARES
+  // first or last can move the other way (the draw factor pulls it toward
+  // its tied neighbour) — that is standard TrueSkill and matches Python.
+  test('Multi-team: sole winner\'s mu rises and sole last place mu falls (300 random games)', () => {
+    let checked = 0;
+    for (let k = 0; k < 300; k++) {
+      const nTeams = 3 + Math.floor(rand() * 3);
+      const teams = [];
+      for (let t = 0; t < nTeams; t++) {
+        const size = 1 + Math.floor(rand() * 4), ps = [];
+        for (let i = 0; i < size; i++) ps.push({ id: `t${t}p${i}`, ...randRating() });
+        teams.push({ score: Math.floor(rand() * 16), players: ps });
+      }
+      if (teams.every(t => t.score === teams[0].score)) teams[0].score++;
+      const g = E.rateGame({ teams, scoringTarget: 15, typeWeight: 0.6, config: cfg });
+      const best = Math.min(...g.ranks), worst = Math.max(...g.ranks);
+      const soleBest = g.ranks.filter(r => r === best).length === 1;
+      const soleWorst = g.ranks.filter(r => r === worst).length === 1;
+      g.updates.forEach(u => {
+        const r = g.ranks[u.team];
+        if (r === best && soleBest) { checked++; assert(u.mu > u.oldMu, `game ${k}: winner ${u.id} mu did not rise`); }
+        if (r === worst && soleWorst) { checked++; assert(u.mu < u.oldMu, `game ${k}: last ${u.id} mu did not fall`); }
+      });
+    }
+    return `${checked} player updates checked`;
+  });
+
+  test('Replaying history after deleting a game equals never having played it', () => {
+    const data = JSON.parse(JSON.stringify(ref.replay.data));
+    const full = E.replayHistory(data);
+    const deleted = E.replayHistory(Object.assign({}, data, { games: data.games.filter(g => g.id !== 'g4') }));
+    const never = E.replayHistory(Object.assign({}, data, { games: data.games.filter(g => g.id !== 'g4').map(g => ({ ...g })) }));
+    assert(JSON.stringify(deleted.ratings) === JSON.stringify(never.ratings), 'deleted != never played');
+    assert(JSON.stringify(deleted.ratings) !== JSON.stringify(full.ratings), 'deleting should change ratings');
+    for (const id in ref.replay.expectedWithoutG4) {
+      close(deleted.ratings[id].mu, ref.replay.expectedWithoutG4[id].mu, TOL, id + ' mu vs Python');
+      close(deleted.ratings[id].sigma, ref.replay.expectedWithoutG4[id].sigma, TOL, id + ' sigma vs Python');
+    }
+    return 'also matches Python replay without that game';
+  });
+
+  test('Editing a past game recalculates later games', () => {
+    const data = JSON.parse(JSON.stringify(ref.replay.data));
+    const before = E.replayHistory(data);
+    data.games.find(g => g.id === 'g1').teams[1].score = 4;
+    const after = E.replayHistory(data);
+    assert(before.results.g7.updates[0].mu !== after.results.g7.updates[0].mu, 'later game unaffected');
+  });
+
+  test('Score above target (bonus points) never produces a margin above 1', () => {
+    for (let k = 0; k < 2000; k++) {
+      const target = 1 + Math.floor(rand() * 20);
+      const top = target + Math.floor(rand() * 10);
+      const scores = [top, Math.floor(rand() * (top + 1)), Math.floor(rand() * (top + 1))];
+      const m = E.computeMargin(scores, target);
+      assert(m >= 0 && m <= 1, `margin ${m} for ${scores} target ${target}`);
+      const mf = E.computeMarginFactor(scores, target, cfg);
+      assert(mf.factor <= cfg.maxMargin + 1e-12, 'factor above max');
+    }
+    close(E.computeMargin([17, 0], 15), 1, 0, '17-0 to 15');
+    close(E.computeMargin([17, 15], 15), 2 / 17, 1e-15, '17-15 to 15');
+  });
+
+  /* ---------- Unit tests for the small pieces ---------- */
+  test('Ranks from scores (higher = better, ties share rank)', () => {
+    assert(JSON.stringify(E.ranksFromScores([7, 3])) === '[0,1]');
+    assert(JSON.stringify(E.ranksFromScores([3, 7, 5])) === '[2,0,1]');
+    assert(JSON.stringify(E.ranksFromScores([5, 5, 2])) === '[0,0,2]');
+    assert(JSON.stringify(E.ranksFromScores([5, 2, 2])) === '[0,1,1]');
+  });
+
+  test('Outcomes: 2-team W/L/D; 3+ teams first=W, last=L, middle=none', () => {
+    assert(JSON.stringify(E.outcomesFromRanks([0, 1])) === '["W","L"]');
+    assert(JSON.stringify(E.outcomesFromRanks([0, 0])) === '["D","D"]');
+    assert(JSON.stringify(E.outcomesFromRanks([1, 0, 2])) === '[null,"W","L"]');
+    assert(JSON.stringify(E.outcomesFromRanks([0, 0, 2])) === '["W","W","L"]');
+    assert(JSON.stringify(E.outcomesFromRanks([0, 0, 0])) === '["D","D","D"]');
+  });
+
+  test('Margin factor: draw = 1.0, shutout = max, 1-point = near min', () => {
+    assert(E.computeMarginFactor([9, 9], 15, cfg).factor === 1, 'draw');
+    assert(E.computeMarginFactor([4, 4, 4], 5, cfg).factor === 1, '3-team draw');
+    close(E.computeMarginFactor([15, 0], 15, cfg).factor, 1.25, 1e-12, 'shutout');
+    close(E.computeMarginFactor([15, 14], 15, cfg).factor, 0.75 + 0.5 / 15, 1e-12, '15-14');
+    close(E.computeMarginFactor([7, 5, 1], 7, cfg).factor, 0.75 + 0.5 * 6 / 7, 1e-12, '3-team top vs bottom');
+  });
+
+  test('Effective weight is clamped to [0, 1.5]', () => {
+    assert(E.effectiveWeight(2, 1.25, cfg) === 1.5, 'upper clamp');
+    assert(E.effectiveWeight(-1, 1, cfg) === 0, 'lower clamp');
+    close(E.effectiveWeight(0.6, 1.1, cfg), 0.66, 1e-12, 'product');
+  });
+
+  test('Sigma floor of 0.5 after weighted update', () => {
+    const u = E.applyWeightedUpdate({ mu: 25, sigma: 0.6 }, { mu: 26, sigma: 0.4 }, 1.5, cfg);
+    assert(u.sigma === 0.5, 'sigma ' + u.sigma);
+    const v = E.applyWeightedUpdate({ mu: 25, sigma: 0.6 }, { mu: 26, sigma: 0.55 }, 1.0, cfg);
+    assert(v.sigma === 0.55, 'floor must not apply above 0.5: ' + v.sigma);
+  });
+
+  test('Chronological order: date, then createdAt (list order irrelevant)', () => {
+    const rep = E.replayHistory(ref.replay.data);
+    assert(rep.order.join(',') === 'g1,g2,g3,g4,g5,g6,g7', rep.order.join(','));
+  });
+
+  test('Invalid games are skipped and reported, not fatal', () => {
+    const rep = E.replayHistory({ players: [{ id: 'a' }, { id: 'b' }], gameTypes: [],
+      games: [{ id: 'x', date: '2026-01-01', teams: [{ playerIds: ['a'], score: 1 }, { playerIds: ['a'], score: 0 }] },
+              { id: 'y', date: '2026-01-02', teams: [{ playerIds: ['a'], score: 1 }] }] });
+    assert(rep.errors.length === 2 && rep.order.length === 0);
+  });
+
+  test('Extreme upset does not throw or produce NaN', () => {
+    const out = E.rateTeams([[{ mu: 5, sigma: 0.5 }], [{ mu: 60, sigma: 0.5 }]], [0, 1], cfg);
+    out.flat().forEach(r => assert(isFinite(r.mu) && isFinite(r.sigma) && r.sigma > 0, JSON.stringify(r)));
+  });
+
+  finish();
+  function finish() {
+    const passed = results.filter(r => r.pass).length;
+    const s = document.getElementById('summary');
+    s.className = passed === results.length ? 'ok' : 'bad';
+    s.textContent = `${passed} / ${results.length} passed`;
+    window.__testResults = { passed, total: results.length, results };
+  }
+})();
+</script>
+</body>
+</html>

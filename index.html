@@ -1,0 +1,1767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f3f4f6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b0d10" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="TrueSkill">
+<meta name="format-detection" content="telephone=no">
+<title>Frisbee TrueSkill</title>
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<link rel="manifest" id="manifest-link" href="data:application/manifest+json,%7B%7D">
+<style>
+  :root {
+    --bg: #f3f4f6; --card: #ffffff; --card2: #f3f4f6; --fg: #111827; --muted: #6b7280; --line: #e5e7eb;
+    --accent: #0f766e; --accent-soft: #ccfbf1; --on-accent: #ffffff;
+    --good: #15803d; --bad: #b91c1c; --warn: #a16207;
+    --team0: #2563eb; --team1: #dc2626; --team2: #16a34a; --team3: #9333ea; --team4: #ea580c; --team5: #0891b2;
+    --on-team: #ffffff;
+    --tabbar-h: 58px; --radius: 14px;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0b0d10; --card: #15181d; --card2: #1f242b; --fg: #e5e7eb; --muted: #9aa3af; --line: #2a2f37;
+      --accent: #2dd4bf; --accent-soft: #123b37; --on-accent: #03201c;
+      --good: #4ade80; --bad: #f87171; --warn: #fbbf24;
+      --team0: #60a5fa; --team1: #f87171; --team2: #4ade80; --team3: #c084fc; --team4: #fb923c; --team5: #22d3ee;
+      --on-team: #0b0d10;
+      color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; background: var(--bg); color: var(--fg); }
+  body {
+    font: 16px/1.4 -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, "Segoe UI", sans-serif;
+    -webkit-text-size-adjust: 100%;
+    padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 16px);
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  input, select, textarea {
+    font: inherit; font-size: 16px; color: var(--fg); background: var(--card2);
+    border: 1px solid var(--line); border-radius: 10px; min-height: 44px; padding: 8px 10px; width: 100%;
+  }
+  textarea { min-height: 64px; resize: vertical; }
+  input:focus, textarea:focus, select:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+
+  header.top {
+    position: sticky; top: 0; z-index: 20; background: var(--bg);
+    display: flex; align-items: center; gap: 4px;
+    padding: calc(env(safe-area-inset-top) + 6px) calc(10px + env(safe-area-inset-right)) 6px calc(10px + env(safe-area-inset-left));
+    border-bottom: 1px solid var(--line);
+  }
+  header.top h1 { font-size: 20px; margin: 0; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-left: 6px; }
+  .icon-btn { width: 44px; height: 44px; border: 0; background: none; display: grid; place-items: center; border-radius: 12px; color: var(--accent); }
+  .icon-btn svg { width: 24px; height: 24px; }
+  .icon-btn[hidden] { display: none; }
+
+  main#view {
+    max-width: 720px; margin: 0 auto;
+    padding: 12px calc(16px + env(safe-area-inset-right)) 12px calc(16px + env(safe-area-inset-left));
+  }
+
+  nav.tabbar {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+    height: calc(var(--tabbar-h) + env(safe-area-inset-bottom));
+    padding: 0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    background: var(--card); border-top: 1px solid var(--line);
+    display: grid; grid-template-columns: repeat(4, 1fr);
+  }
+  nav.tabbar a {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+    min-height: 44px; color: var(--muted); font-size: 11px; font-weight: 600;
+  }
+  nav.tabbar a svg { width: 25px; height: 25px; }
+  nav.tabbar a.on { color: var(--accent); }
+  svg.i { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px; margin-bottom: 12px; }
+  .label { font-size: 13px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .03em; margin: 0 0 8px; }
+  .muted { color: var(--muted); }
+  .small { font-size: 13px; }
+  .row { display: flex; gap: 8px; align-items: center; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  label.f { display: block; font-size: 13px; color: var(--muted); font-weight: 600; }
+  label.f > input, label.f > textarea, label.f > select { margin-top: 4px; }
+
+  .btn {
+    min-height: 44px; padding: 0 16px; border-radius: 12px; border: 1px solid var(--line);
+    background: var(--card); font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .btn.primary { background: var(--accent); color: var(--on-accent); border-color: transparent; }
+  .btn.danger { color: var(--bad); }
+  .btn.block { width: 100%; }
+  .btn.big { min-height: 52px; font-size: 17px; }
+  .btn.sm { min-height: 44px; padding: 0 12px; font-size: 14px; }
+  .btn:active, .chip:active, .step:active { transform: scale(.97); }
+  .stack > * + * { margin-top: 8px; }
+
+  .banner { background: var(--accent-soft); border-radius: var(--radius); padding: 10px 12px; margin-bottom: 12px; display: flex; gap: 8px; align-items: center; font-size: 14px; }
+  .banner .grow { flex: 1; }
+
+  /* Rankings */
+  .sub { font-size: 13px; color: var(--muted); margin: 0 2px 8px; }
+  .table-wrap { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow-x: auto; margin-bottom: 12px; }
+  table.rank { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
+  table.rank th { font-size: 11px; font-weight: 700; color: var(--muted); text-align: right; padding: 8px 4px 6px; white-space: nowrap; }
+  table.rank td { text-align: right; padding: 0 4px; height: 50px; border-top: 1px solid var(--line); white-space: nowrap; }
+  table.rank th:first-child, table.rank td:first-child { padding-left: 10px; text-align: left; width: 1%; }
+  table.rank th:last-child, table.rank td:last-child { padding-right: 10px; }
+  table.rank th.name, table.rank td.name { text-align: left; width: 100%; max-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  table.rank td.name .nm { font-weight: 600; font-size: 14px; overflow: hidden; text-overflow: ellipsis; }
+  table.rank td.sk { font-weight: 700; font-size: 14px; }
+  table.rank tr[data-href] { cursor: pointer; }
+  table.rank tr[data-href]:active td { background: var(--card2); }
+  tr.inactive td { opacity: .55; }
+  .prov { font-size: 10px; font-weight: 700; color: var(--warn); text-transform: uppercase; letter-spacing: .03em; }
+  .up { color: var(--good); font-weight: 700; }
+  .down { color: var(--bad); font-weight: 700; }
+  .new { font-size: 10px; font-weight: 700; color: var(--accent); }
+  .switch { display: flex; align-items: center; gap: 10px; min-height: 44px; font-size: 15px; }
+  .switch input { width: 22px; height: 22px; min-height: 0; accent-color: var(--accent); }
+
+  /* Record */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    min-height: 44px; padding: 0 14px; border-radius: 22px; border: 1px solid var(--line);
+    background: var(--card2); font-weight: 600; font-size: 15px; display: inline-flex; align-items: center; gap: 6px;
+  }
+  .chip small { font-weight: 500; opacity: .75; font-size: 12px; }
+  .chip.sel { background: var(--accent); color: var(--on-accent); border-color: transparent; }
+  .chip.ghost { background: none; border-style: dashed; color: var(--accent); }
+  .quick { display: flex; gap: 8px; margin-bottom: 12px; }
+  .quick .btn { flex: 1; }
+  .team { border-left: 6px solid var(--tc); cursor: pointer; }
+  .team.active { box-shadow: 0 0 0 2px var(--tc); }
+  .team-head { display: flex; align-items: center; gap: 8px; min-height: 36px; }
+  .team-head b { font-size: 16px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--tc); flex: none; display: inline-block; }
+  .pill { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 10px; background: var(--tc); color: var(--on-team); }
+  .grow { flex: 1; }
+  .x { width: 44px; height: 44px; border: 0; background: none; color: var(--muted); font-size: 22px; border-radius: 10px; flex: none; }
+  .members { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 10px; min-height: 32px; align-items: center; }
+  .mchip { min-height: 36px; padding: 0 10px; border-radius: 18px; border: 0; background: var(--tc); color: var(--on-team); font-weight: 600; font-size: 14px; }
+  .score { display: flex; align-items: center; gap: 8px; }
+  .score > span { font-weight: 600; color: var(--muted); font-size: 14px; flex: 1; }
+  .step { width: 48px; height: 48px; border-radius: 12px; border: 1px solid var(--line); background: var(--card2); font-size: 24px; font-weight: 600; flex: none; }
+  .score-in { width: 76px; text-align: center; font-size: 22px; font-weight: 700; min-height: 48px; flex: none; }
+  .pool { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 8px; }
+  .pchip {
+    min-height: 44px; border-radius: 12px; border: 1px solid var(--line); background: var(--card2);
+    font-weight: 600; font-size: 14px; padding: 4px 8px; text-align: left; display: flex; align-items: center; gap: 6px; overflow: hidden;
+  }
+  .pchip span.n { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+  .pchip.on { background: var(--tc); color: var(--on-team); border-color: transparent; }
+  .pchip .tn { font-size: 11px; font-weight: 800; opacity: .85; }
+  .pool-new { margin-top: 10px; }
+  .weight { font-size: 14px; color: var(--muted); text-align: center; margin: 4px 0 10px; font-variant-numeric: tabular-nums; }
+  .error { color: var(--bad); font-weight: 600; font-size: 14px; margin: 0 0 10px; }
+  .error:empty { display: none; }
+
+  /* History */
+  h3.date { font-size: 14px; color: var(--muted); margin: 18px 4px 8px; font-weight: 700; }
+  h3.date:first-child { margin-top: 4px; }
+  .game { display: block; }
+  .g-head { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; margin-bottom: 6px; }
+  .g-head b { font-size: 15px; }
+  .g-team { display: flex; align-items: center; gap: 8px; min-height: 30px; font-size: 14px; }
+  .g-team .sc { font-weight: 800; min-width: 28px; text-align: right; font-variant-numeric: tabular-nums; }
+  .g-team .names { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); }
+  .g-team.win .names { color: var(--fg); font-weight: 600; }
+  .g-notes { font-size: 13px; color: var(--muted); margin-top: 6px; font-style: italic; }
+
+  /* Roster */
+  .li { display: flex; align-items: center; gap: 6px; min-height: 56px; border-top: 1px solid var(--line); }
+  .li:first-child { border-top: 0; }
+  .li-main { flex: 1; min-width: 0; padding: 6px 0; }
+  .li-main .nm { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .li.inactive .nm { color: var(--muted); }
+  form.addp { display: flex; gap: 8px; }
+  form.addp input { flex: 1; }
+
+  /* Player */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+  .stat { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px; }
+  .stat .v { font-size: 20px; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .stat .k { font-size: 12px; color: var(--muted); font-weight: 600; }
+  h2.pname { margin: 4px 2px 12px; font-size: 24px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .badge { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 8px; background: var(--card2); color: var(--warn); border: 1px solid var(--line); text-transform: uppercase; }
+  svg.chart { width: 100%; height: auto; display: block; }
+  svg.chart .grid { stroke: var(--line); stroke-width: 1; }
+  svg.chart .axis { fill: var(--muted); font-size: 10px; }
+  svg.chart .skill { stroke: var(--accent); stroke-width: 2.5; fill: none; }
+  svg.chart .mu { stroke: var(--muted); stroke-width: 1.5; fill: none; stroke-dasharray: 4 4; }
+  svg.chart .pt { fill: var(--accent); }
+  .legend { display: flex; gap: 14px; font-size: 12px; color: var(--muted); margin-top: 6px; }
+  .rg { display: flex; align-items: center; gap: 10px; min-height: 52px; border-top: 1px solid var(--line); font-size: 14px; }
+  .rg:first-child { border-top: 0; }
+  .rg .res { font-weight: 800; width: 34px; flex: none; }
+  .rg .mid { flex: 1; min-width: 0; }
+  .rg .mid div { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .rg .dl { font-weight: 700; font-variant-numeric: tabular-nums; }
+
+  /* Settings */
+  .type-row { display: grid; grid-template-columns: 1fr 1fr 44px; gap: 6px 8px; align-items: end; padding: 10px 0; border-top: 1px solid var(--line); }
+  .type-row:first-of-type { border-top: 0; }
+  .type-row label.f { font-size: 11px; }
+  .type-row .tname { grid-column: 1 / 3; }
+  .type-row .x { grid-column: 3; grid-row: 1; }
+  .set-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 52px; border-top: 1px solid var(--line); }
+  .set-row:first-of-type { border-top: 0; }
+  .set-row input { width: 96px; flex: none; text-align: right; }
+  .set-row .desc { font-size: 12px; color: var(--muted); }
+  details summary { min-height: 44px; display: flex; align-items: center; font-weight: 600; color: var(--accent); cursor: pointer; }
+
+  .toast {
+    position: fixed; left: 50%; transform: translateX(-50%) translateY(20px); opacity: 0; pointer-events: none;
+    bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 12px); z-index: 30;
+    background: var(--fg); color: var(--bg); padding: 10px 16px; border-radius: 12px; font-size: 14px; font-weight: 600;
+    max-width: calc(100vw - 32px); transition: opacity .2s, transform .2s; box-shadow: 0 6px 20px rgba(0,0,0,.25);
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .toast.bad { background: var(--bad); color: #fff; }
+  .empty { text-align: center; padding: 28px 12px; }
+</style>
+</head>
+<body>
+<header class="top">
+  <button class="icon-btn" id="back-btn" data-act="back" aria-label="Back" hidden>
+    <svg class="i" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <h1 id="title">Rankings</h1>
+  <a class="icon-btn" id="settings-btn" href="#settings" aria-label="Settings">
+    <svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+  </a>
+</header>
+<main id="view"></main>
+<nav class="tabbar">
+  <a href="#rankings" data-tab="rankings"><svg class="i" viewBox="0 0 24 24"><path d="M5 20v-8M12 20V5M19 20v-5M3 20h18"/></svg>Rankings</a>
+  <a href="#record" data-tab="record"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Record</a>
+  <a href="#history" data-tab="history"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>History</a>
+  <a href="#roster" data-tab="roster"><svg class="i" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.8c1.8.7 3 2.5 3.5 5.2"/></svg>Roster</a>
+</nav>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<input type="file" id="import-file" accept="application/json,.json" hidden>
+<script id="rating-engine">
+/* =====================================================================
+ * RATING ENGINE  —  pure functions only (no DOM, no storage, no globals
+ * besides the RatingEngine namespace). Written to be translatable to
+ * Swift line by line.
+ *
+ * Core: multi-team TrueSkill factor graph, a direct port of the Python
+ * `trueskill` 0.4.5 package (Heungsub Lee), including its pure-Python
+ * erfc / erfcinv approximations so results match it to ~1e-12.
+ *
+ * Contract (main entry points):
+ *
+ *   rateTeams(teams, ranks, env) -> teams'
+ *     teams : [[{mu, sigma}, ...], ...]   2+ teams, each 1+ players
+ *     ranks : [int, ...]                  0 = best; equal = tie
+ *     env   : {beta, tau, drawProbability, minDelta?}
+ *     returns unweighted TrueSkill posteriors, same shape as `teams`.
+ *
+ *   rateGame(input) -> result
+ *     input : { teams: [{ score, players: [{id, mu, sigma}] }],
+ *               scoringTarget, typeWeight, config }
+ *     result: { ranks, outcomes, margin, marginFactor, isDraw, weight,
+ *               updates: [{id, team, oldMu, oldSigma, tsMu, tsSigma,
+ *                          mu, sigma}] }
+ *
+ *   replayHistory(data) -> { ratings, timeline, results, order, errors }
+ *     data  : { players, games, gameTypes, settings }  (the stored JSON)
+ * ===================================================================== */
+var RatingEngine = (function () {
+  'use strict';
+
+  var DEFAULT_CONFIG = {
+    mu: 25,
+    sigma: 25 / 3,
+    beta: 25 / 3 / 2,
+    tau: 25 / 3 / 100,
+    drawProbability: 0.10,
+    minMargin: 0.75,
+    maxMargin: 1.25,
+    maxWeight: 1.5,      // effective weight is clamped to [0, maxWeight]
+    sigmaFloor: 0.5,     // sigma never drops below this after a weighted update
+    provisionalGames: 5, // fewer rated games than this => "Provisional"
+    minDelta: 0.0001     // convergence threshold of the factor-graph schedule
+  };
+
+  function withDefaults(config) {
+    var out = {};
+    for (var k in DEFAULT_CONFIG) {
+      out[k] = (config && typeof config[k] === 'number' && isFinite(config[k])) ? config[k] : DEFAULT_CONFIG[k];
+    }
+    return out;
+  }
+
+  /* ---------------- Normal distribution (trueskill.backends) ---------- */
+
+  var INV_SQRT_2PI = 1 / Math.sqrt(2 * Math.PI);
+
+  // Complementary error function (Numerical Recipes approximation).
+  function erfc(x) {
+    var z = Math.abs(x);
+    var t = 1 / (1 + z / 2);
+    var r = t * Math.exp(-z * z - 1.26551223 + t * (1.00002368 + t * (
+      0.37409196 + t * (0.09678418 + t * (-0.18628806 + t * (
+        0.27886807 + t * (-1.13520398 + t * (1.48851587 + t * (
+          -0.82215223 + t * 0.17087277
+        )))
+      )))
+    )));
+    return x < 0 ? 2 - r : r;
+  }
+
+  function erfcinv(y) {
+    if (y >= 2) return -100;
+    if (y <= 0) return 100;
+    var zeroPoint = y < 1;
+    if (!zeroPoint) y = 2 - y;
+    var t = Math.sqrt(-2 * Math.log(y / 2));
+    var x = -0.70711 * ((2.30753 + t * 0.27061) / (1 + t * (0.99229 + t * 0.04481)) - t);
+    for (var i = 0; i < 2; i++) {
+      var err = erfc(x) - y;
+      x += err / (1.12837916709551257 * Math.exp(-(x * x)) - x * err);
+    }
+    return zeroPoint ? x : -x;
+  }
+
+  function cdf(x) { return 0.5 * erfc(-x / Math.SQRT2); }
+  function pdf(x) { return INV_SQRT_2PI * Math.exp(-(x * x) / 2); }
+  function ppf(p) { return -Math.SQRT2 * erfcinv(2 * p); }
+
+  /* ---------------- Truncated-Gaussian corrections (V, W) ------------- */
+
+  // When the Python library would raise FloatingPointError (extreme
+  // upsets), we clamp W into (0, 1) instead so a replay never aborts.
+  var W_EPS = 1e-6;
+
+  function vWin(diff, drawMargin) {
+    var x = diff - drawMargin;
+    var denom = cdf(x);
+    return denom ? pdf(x) / denom : -x;
+  }
+
+  function wWin(diff, drawMargin) {
+    var x = diff - drawMargin;
+    var v = vWin(diff, drawMargin);
+    var w = v * (v + x);
+    if (w > 0 && w < 1) return w;
+    return (w >= 1) ? 1 - W_EPS : W_EPS;
+  }
+
+  function vDraw(diff, drawMargin) {
+    var absDiff = Math.abs(diff);
+    var a = drawMargin - absDiff;
+    var b = -drawMargin - absDiff;
+    var denom = cdf(a) - cdf(b);
+    var numer = pdf(b) - pdf(a);
+    return (denom ? numer / denom : a) * (diff < 0 ? -1 : 1);
+  }
+
+  function wDraw(diff, drawMargin) {
+    var absDiff = Math.abs(diff);
+    var a = drawMargin - absDiff;
+    var b = -drawMargin - absDiff;
+    var denom = cdf(a) - cdf(b);
+    if (!denom) return 1 - W_EPS;
+    var v = vDraw(absDiff, drawMargin);
+    var w = (v * v) + (a * pdf(a) - b * pdf(b)) / denom;
+    if (!(w > 0 && w < 1)) return (w >= 1) ? 1 - W_EPS : W_EPS;
+    return w;
+  }
+
+  function calcDrawMargin(drawProbability, size, beta) {
+    return ppf((drawProbability + 1) / 2) * Math.sqrt(size) * beta;
+  }
+
+  /* ---------------- Gaussians in natural parameters (pi, tau) --------- */
+  // pi = 1/sigma^2 (precision), tau = pi*mu (precision-adjusted mean)
+
+  function gaussian(mu, sigma) { var pi = 1 / (sigma * sigma); return { pi: pi, tau: pi * mu }; }
+  function gMul(a, b) { return { pi: a.pi + b.pi, tau: a.tau + b.tau }; }
+  function gDiv(a, b) { return { pi: a.pi - b.pi, tau: a.tau - b.tau }; }
+  function gMu(g) { return g.pi === 0 ? 0 : g.tau / g.pi; }
+  function gSigma(g) { return g.pi === 0 ? Infinity : Math.sqrt(1 / g.pi); }
+
+  /* ---------------- Factor-graph variables ---------------------------- */
+  // A variable is its current marginal {pi, tau} plus the last message it
+  // received from each attached factor, keyed by factor id.
+
+  function newVariable() { return { pi: 0, tau: 0, msgs: {} }; }
+
+  function varDelta(v, g) {
+    var piDelta = Math.abs(v.pi - g.pi);
+    if (piDelta === Infinity) return 0;
+    return Math.max(Math.abs(v.tau - g.tau), Math.sqrt(piDelta));
+  }
+
+  function varSet(v, g) {
+    var delta = varDelta(v, g);
+    v.pi = g.pi;
+    v.tau = g.tau;
+    return delta;
+  }
+
+  // Replace this factor's message to v; marginal = v / old * new.
+  function varUpdateMessage(v, fid, message) {
+    var oldMessage = v.msgs[fid];
+    v.msgs[fid] = message;
+    return varSet(v, gMul(gDiv(v, oldMessage), message));
+  }
+
+  // Set v's marginal directly; back out the implied message.
+  function varUpdateValue(v, fid, value) {
+    var oldMessage = v.msgs[fid];
+    v.msgs[fid] = gDiv(gMul(value, oldMessage), v);
+    return varSet(v, value);
+  }
+
+  /* ---------------- Factors ------------------------------------------- */
+
+  function makeFactor(state, kind, vars) {
+    var f = { id: state.nextId++, kind: kind, vars: vars };
+    for (var i = 0; i < vars.length; i++) vars[i].msgs[f.id] = { pi: 0, tau: 0 };
+    return f;
+  }
+
+  // PriorFactor: rating prior N(mu, sigma^2 + tau^2)
+  function priorDown(f, dynamic) {
+    var sigma = Math.sqrt(f.sigma * f.sigma + dynamic * dynamic);
+    return varUpdateValue(f.vars[0], f.id, gaussian(f.mu, sigma));
+  }
+
+  // LikelihoodFactor: performance ~ N(skill, beta^2)
+  function likelihoodPass(f, from, to) {
+    var msg = gDiv(from, from.msgs[f.id]);
+    var a = 1 / (1 + f.variance * msg.pi);
+    return varUpdateMessage(to, f.id, { pi: a * msg.pi, tau: a * msg.tau });
+  }
+  function likelihoodDown(f) { return likelihoodPass(f, f.vars[0], f.vars[1]); }
+  function likelihoodUp(f) { return likelihoodPass(f, f.vars[1], f.vars[0]); }
+
+  // SumFactor: sum = sum_i coeffs[i] * terms[i]
+  function sumUpdate(f, target, vals, coeffs) {
+    var piInv = 0;
+    var mu = 0;
+    for (var i = 0; i < vals.length; i++) {
+      var div = gDiv(vals[i], vals[i].msgs[f.id]);
+      mu += coeffs[i] * gMu(div);
+      if (piInv === Infinity) continue;
+      if (div.pi === 0) piInv = Infinity;
+      else piInv += coeffs[i] * coeffs[i] / div.pi;
+    }
+    var pi = 1 / piInv;
+    var tau = pi * mu;
+    return varUpdateMessage(target, f.id, { pi: pi, tau: tau });
+  }
+
+  function sumDown(f) {
+    return sumUpdate(f, f.sum, f.terms, f.coeffs);
+  }
+
+  function sumUp(f, index) {
+    var coeff = f.coeffs[index];
+    var coeffs = [];
+    for (var x = 0; x < f.coeffs.length; x++) {
+      if (coeff === 0) coeffs.push(0);
+      else if (x === index) coeffs.push(1 / coeff);
+      else coeffs.push(-f.coeffs[x] / coeff);
+    }
+    var vals = f.terms.slice();
+    vals[index] = f.sum;
+    return sumUpdate(f, f.terms[index], vals, coeffs);
+  }
+
+  // TruncateFactor: win (diff > margin) or draw (|diff| <= margin)
+  function truncUp(f) {
+    var v = f.vars[0];
+    var div = gDiv(v, v.msgs[f.id]);
+    var sqrtPi = Math.sqrt(div.pi);
+    var diff = div.tau / sqrtPi;
+    var margin = f.drawMargin * sqrtPi;
+    var vv = f.isDraw ? vDraw(diff, margin) : vWin(diff, margin);
+    var ww = f.isDraw ? wDraw(diff, margin) : wWin(diff, margin);
+    var denom = 1 - ww;
+    return varUpdateValue(v, f.id, { pi: div.pi / denom, tau: (div.tau + sqrtPi * vv) / denom });
+  }
+
+  /* ---------------- Multi-team TrueSkill ------------------------------ */
+
+  function rateTeams(teams, ranks, env) {
+    if (!teams || teams.length < 2) throw new Error('rateTeams: need at least 2 teams');
+    if (!ranks || ranks.length !== teams.length) throw new Error('rateTeams: ranks length mismatch');
+    for (var c = 0; c < teams.length; c++) {
+      if (!teams[c] || teams[c].length < 1) throw new Error('rateTeams: empty team');
+    }
+    var beta = env.beta, tau = env.tau, drawProbability = env.drawProbability;
+    var minDelta = env.minDelta || DEFAULT_CONFIG.minDelta;
+
+    // Sort teams by rank (stable, like Python's sorted()).
+    var order = [];
+    for (var i = 0; i < teams.length; i++) order.push(i);
+    order.sort(function (a, b) { return (ranks[a] - ranks[b]) || (a - b); });
+    var sTeams = order.map(function (k) { return teams[k]; });
+    var sRanks = order.map(function (k) { return ranks[k]; });
+
+    var state = { nextId: 0 };
+    var nTeams = sTeams.length;
+
+    // Variables
+    var ratingVars = [], perfVars = [], teamPerfVars = [], teamDiffVars = [];
+    var teamStart = [], flat = [];
+    for (var t = 0; t < nTeams; t++) {
+      teamStart.push(flat.length);
+      for (var p = 0; p < sTeams[t].length; p++) flat.push(sTeams[t][p]);
+    }
+    teamStart.push(flat.length);
+    for (i = 0; i < flat.length; i++) { ratingVars.push(newVariable()); perfVars.push(newVariable()); }
+    for (t = 0; t < nTeams; t++) teamPerfVars.push(newVariable());
+    for (t = 0; t < nTeams - 1; t++) teamDiffVars.push(newVariable());
+
+    // Layers (built in the same order as the Python library)
+    var ratingLayer = [], perfLayer = [], teamPerfLayer = [], teamDiffLayer = [], truncLayer = [];
+    var f;
+    for (i = 0; i < flat.length; i++) {
+      f = makeFactor(state, 'prior', [ratingVars[i]]);
+      f.mu = flat[i].mu; f.sigma = flat[i].sigma;
+      ratingLayer.push(f);
+    }
+    for (i = 0; i < flat.length; i++) {
+      f = makeFactor(state, 'likelihood', [ratingVars[i], perfVars[i]]);
+      f.variance = beta * beta;
+      perfLayer.push(f);
+    }
+    for (t = 0; t < nTeams; t++) {
+      var terms = perfVars.slice(teamStart[t], teamStart[t + 1]);
+      f = makeFactor(state, 'sum', [teamPerfVars[t]].concat(terms));
+      f.sum = teamPerfVars[t]; f.terms = terms;
+      f.coeffs = terms.map(function () { return 1; });
+      teamPerfLayer.push(f);
+    }
+
+    // Gray arrows: everything flows down once.
+    for (i = 0; i < ratingLayer.length; i++) priorDown(ratingLayer[i], tau);
+    for (i = 0; i < perfLayer.length; i++) likelihoodDown(perfLayer[i]);
+    for (i = 0; i < teamPerfLayer.length; i++) sumDown(teamPerfLayer[i]);
+
+    for (t = 0; t < nTeams - 1; t++) {
+      var pair = [teamPerfVars[t], teamPerfVars[t + 1]];
+      f = makeFactor(state, 'sum', [teamDiffVars[t]].concat(pair));
+      f.sum = teamDiffVars[t]; f.terms = pair; f.coeffs = [1, -1];
+      teamDiffLayer.push(f);
+    }
+    for (t = 0; t < nTeams - 1; t++) {
+      var size = sTeams[t].length + sTeams[t + 1].length;
+      f = makeFactor(state, 'trunc', [teamDiffVars[t]]);
+      f.drawMargin = calcDrawMargin(drawProbability, size, beta);
+      f.isDraw = sRanks[t] === sRanks[t + 1];
+      truncLayer.push(f);
+    }
+
+    // Iterate the team-difference chain until converged (max 10 passes).
+    var L = teamDiffLayer.length;
+    for (var iter = 0; iter < 10; iter++) {
+      var delta;
+      if (L === 1) {
+        sumDown(teamDiffLayer[0]);
+        delta = truncUp(truncLayer[0]);
+      } else {
+        delta = 0;
+        for (var x = 0; x < L - 1; x++) {
+          sumDown(teamDiffLayer[x]);
+          delta = Math.max(delta, truncUp(truncLayer[x]));
+          sumUp(teamDiffLayer[x], 1);
+        }
+        for (x = L - 1; x > 0; x--) {
+          sumDown(teamDiffLayer[x]);
+          delta = Math.max(delta, truncUp(truncLayer[x]));
+          sumUp(teamDiffLayer[x], 0);
+        }
+      }
+      if (delta <= minDelta) break;
+    }
+    sumUp(teamDiffLayer[0], 0);
+    sumUp(teamDiffLayer[L - 1], 1);
+    for (i = 0; i < teamPerfLayer.length; i++) {
+      for (x = 0; x < teamPerfLayer[i].terms.length; x++) sumUp(teamPerfLayer[i], x);
+    }
+    for (i = 0; i < perfLayer.length; i++) likelihoodUp(perfLayer[i]);
+
+    // Read posteriors and unsort back to the caller's team order.
+    var result = new Array(nTeams);
+    for (t = 0; t < nTeams; t++) {
+      var group = [];
+      for (i = teamStart[t]; i < teamStart[t + 1]; i++) {
+        group.push({ mu: gMu(ratingVars[i]), sigma: gSigma(ratingVars[i]) });
+      }
+      result[order[t]] = group;
+    }
+    return result;
+  }
+
+  /* ---------------- Game-level logic ---------------------------------- */
+
+  // Higher score = better. rank = number of teams with a strictly higher
+  // score, so equal scores share a rank (0 = best).
+  function ranksFromScores(scores) {
+    return scores.map(function (s) {
+      var r = 0;
+      for (var i = 0; i < scores.length; i++) if (scores[i] > s) r++;
+      return r;
+    });
+  }
+
+  function isAllTied(scores) {
+    for (var i = 1; i < scores.length; i++) if (scores[i] !== scores[0]) return false;
+    return true;
+  }
+
+  // Normalized margin of victory in [0, 1], relative to the scoring system.
+  // Uses the top and bottom scores; max() handles bonus points above target.
+  function computeMargin(scores, scoringTarget) {
+    var top = Math.max.apply(null, scores);
+    var bottom = Math.min.apply(null, scores);
+    var denom = Math.max(scoringTarget || 0, top);
+    if (!(denom > 0)) return 0;
+    var m = (top - bottom) / denom;
+    return Math.min(1, Math.max(0, m));
+  }
+
+  // Margin multiplier. A full draw (all teams tied) is neutral (1.0).
+  function computeMarginFactor(scores, scoringTarget, config) {
+    var cfg = withDefaults(config);
+    if (isAllTied(scores)) return { margin: 0, factor: 1, isDraw: true };
+    var m = computeMargin(scores, scoringTarget);
+    return { margin: m, factor: cfg.minMargin + (cfg.maxMargin - cfg.minMargin) * m, isDraw: false };
+  }
+
+  function effectiveWeight(typeWeight, marginFactor, config) {
+    var cfg = withDefaults(config);
+    var w = (Number(typeWeight) || 0) * marginFactor;
+    return Math.min(cfg.maxWeight, Math.max(0, w));
+  }
+
+  // Blend the unweighted TrueSkill posterior with the prior by weight w:
+  //   new = old + w * (ts - old)
+  // written as (1 - w) * old + w * ts, which is algebraically identical
+  // but gives bit-exact results at w = 0 (old) and w = 1 (ts).
+  // Swap this function to change how game weights are applied.
+  function applyWeightedUpdate(old, ts, w, config) {
+    var cfg = withDefaults(config);
+    var mu = (1 - w) * old.mu + w * ts.mu;
+    var sigma = (1 - w) * old.sigma + w * ts.sigma;
+    return { mu: mu, sigma: Math.max(cfg.sigmaFloor, sigma) };
+  }
+
+  // 'W' = finished first, 'L' = finished last, 'D' = every team tied,
+  // null = a middle finish in a 3+ team game. Shared first counts as W,
+  // shared last as L (unless all teams tied).
+  function outcomesFromRanks(ranks) {
+    var best = Math.min.apply(null, ranks);
+    var worst = Math.max.apply(null, ranks);
+    return ranks.map(function (r) {
+      if (best === worst) return 'D';
+      if (r === best) return 'W';
+      if (r === worst) return 'L';
+      return null;
+    });
+  }
+
+  function rateGame(input) {
+    var cfg = withDefaults(input.config);
+    var scores = input.teams.map(function (t) { return Number(t.score) || 0; });
+    var ranks = ranksFromScores(scores);
+    var mf = computeMarginFactor(scores, input.scoringTarget, cfg);
+    var w = effectiveWeight(input.typeWeight, mf.factor, cfg);
+    var ts = rateTeams(
+      input.teams.map(function (t) { return t.players.map(function (p) { return { mu: p.mu, sigma: p.sigma }; }); }),
+      ranks, cfg);
+    var updates = [];
+    for (var t = 0; t < input.teams.length; t++) {
+      for (var i = 0; i < input.teams[t].players.length; i++) {
+        var p = input.teams[t].players[i];
+        var r = applyWeightedUpdate({ mu: p.mu, sigma: p.sigma }, ts[t][i], w, cfg);
+        updates.push({ id: p.id, team: t, oldMu: p.mu, oldSigma: p.sigma,
+          tsMu: ts[t][i].mu, tsSigma: ts[t][i].sigma, mu: r.mu, sigma: r.sigma });
+      }
+    }
+    return { ranks: ranks, outcomes: outcomesFromRanks(ranks), margin: mf.margin,
+      marginFactor: mf.factor, isDraw: mf.isDraw, weight: w, updates: updates };
+  }
+
+  function conservativeSkill(r) { return r.mu - 3 * r.sigma; }
+
+  /* ---------------- History replay ------------------------------------ */
+
+  // Chronological order: date (YYYY-MM-DD), then createdAt, then id.
+  function compareGames(a, b) {
+    if (a.date !== b.date) return a.date < b.date ? -1 : 1;
+    var ca = a.createdAt || 0, cb = b.createdAt || 0;
+    if (ca !== cb) return ca - cb;
+    return a.id < b.id ? -1 : (a.id > b.id ? 1 : 0);
+  }
+
+  function validateGame(g) {
+    if (!g || !Array.isArray(g.teams) || g.teams.length < 2) return 'needs at least 2 teams';
+    var seen = {};
+    for (var t = 0; t < g.teams.length; t++) {
+      var team = g.teams[t];
+      if (!team || !Array.isArray(team.playerIds) || team.playerIds.length < 1) return 'team ' + (t + 1) + ' has no players';
+      if (typeof team.score !== 'number' || !isFinite(team.score)) return 'team ' + (t + 1) + ' has no valid score';
+      for (var i = 0; i < team.playerIds.length; i++) {
+        if (seen[team.playerIds[i]]) return 'a player is on more than one team';
+        seen[team.playerIds[i]] = true;
+      }
+    }
+    return null;
+  }
+
+  function freshRating(cfg) {
+    return { mu: cfg.mu, sigma: cfg.sigma, games: 0, wins: 0, losses: 0, draws: 0 };
+  }
+
+  // Replays every game in chronological order from default ratings.
+  // Pure: the same input always yields the same output.
+  function replayHistory(data) {
+    var cfg = withDefaults(data.settings);
+    var typeById = {};
+    (data.gameTypes || []).forEach(function (t) { typeById[t.id] = t; });
+    var ratings = {}, timeline = {}, results = {}, errors = [];
+    (data.players || []).forEach(function (p) { ratings[p.id] = freshRating(cfg); timeline[p.id] = []; });
+
+    var games = (data.games || []).slice().sort(compareGames);
+    var order = [];
+    games.forEach(function (g) {
+      var problem = validateGame(g);
+      if (problem) { errors.push({ gameId: g.id, error: problem }); return; }
+      var type = typeById[g.typeId];
+      var typeWeight = type ? type.weight : 1;
+      var target = (typeof g.scoringTarget === 'number') ? g.scoringTarget : (type ? type.target : 0);
+      var input = {
+        teams: g.teams.map(function (team) {
+          return { score: team.score, players: team.playerIds.map(function (id) {
+            if (!ratings[id]) { ratings[id] = freshRating(cfg); timeline[id] = []; }
+            return { id: id, mu: ratings[id].mu, sigma: ratings[id].sigma };
+          }) };
+        }),
+        scoringTarget: target, typeWeight: typeWeight, config: cfg
+      };
+      var res = rateGame(input);
+      res.missingType = !type;
+      res.gameId = g.id;
+      res.index = order.length;
+      res.updates.forEach(function (u) {
+        var r = ratings[u.id];
+        r.mu = u.mu; r.sigma = u.sigma; r.games++;
+        var o = res.outcomes[u.team];
+        if (o === 'W') r.wins++; else if (o === 'L') r.losses++; else if (o === 'D') r.draws++;
+        timeline[u.id].push({ gameId: g.id, date: g.date, mu: u.mu, sigma: u.sigma,
+          skill: conservativeSkill(u), deltaSkill: conservativeSkill(u) - conservativeSkill({ mu: u.oldMu, sigma: u.oldSigma }),
+          outcome: o, rank: res.ranks[u.team] });
+      });
+      results[g.id] = res;
+      order.push(g.id);
+    });
+    return { ratings: ratings, timeline: timeline, results: results, order: order, errors: errors, config: cfg };
+  }
+
+  // A player's rating as of the end of games strictly before `date`
+  // (null if they had not played yet).
+  function ratingBefore(timelineForPlayer, date) {
+    var last = null;
+    for (var i = 0; i < timelineForPlayer.length; i++) {
+      if (timelineForPlayer[i].date < date) last = timelineForPlayer[i]; else break;
+    }
+    return last;
+  }
+
+  return {
+    DEFAULT_CONFIG: DEFAULT_CONFIG,
+    withDefaults: withDefaults,
+    // math (exported for tests)
+    erfc: erfc, erfcinv: erfcinv, cdf: cdf, pdf: pdf, ppf: ppf,
+    calcDrawMargin: calcDrawMargin,
+    // TrueSkill
+    rateTeams: rateTeams,
+    // game logic
+    ranksFromScores: ranksFromScores,
+    computeMargin: computeMargin,
+    computeMarginFactor: computeMarginFactor,
+    effectiveWeight: effectiveWeight,
+    applyWeightedUpdate: applyWeightedUpdate,
+    outcomesFromRanks: outcomesFromRanks,
+    rateGame: rateGame,
+    conservativeSkill: conservativeSkill,
+    // history
+    compareGames: compareGames,
+    validateGame: validateGame,
+    replayHistory: replayHistory,
+    ratingBefore: ratingBefore
+  };
+})();
+</script>
+
+<script id="app">
+/* =====================================================================
+ * APP  —  storage, routing and views. All rating math goes through
+ * RatingEngine; ratings are never stored, only derived from games.
+ * ===================================================================== */
+(function () {
+  'use strict';
+  var E = RatingEngine;
+  var STORAGE_KEY = 'frisbee-trueskill';
+  var APP_ID = 'frisbee-trueskill';
+  var SCHEMA_VERSION = 1;
+  var MAX_TEAMS = 6;
+  var DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+
+  var DEFAULT_GAME_TYPES = [
+    { id: 'warmup', name: 'Warmup game', weight: 0.3, target: 5 },
+    { id: 'mini', name: 'Mini (small-sided)', weight: 0.6, target: 7 },
+    { id: 'full7s', name: 'Full field 7s', weight: 1.0, target: 15 },
+    { id: 'drill', name: 'Drill', weight: 0.4, target: 10 }
+  ];
+
+  /* ---------------- helpers ---------------- */
+  function clone(x) { return JSON.parse(JSON.stringify(x)); }
+  function uid(prefix) { return prefix + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+  function todayISO() { var d = new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function fx(x, d) { var s = Number(x).toFixed(d); return /^-0(\.0*)?$/.test(s) ? s.slice(1) : s; }
+  function signed(x, d) { var s = fx(x, d); return (Number(s) > 0 ? '+' : '') + s; }
+  function fmtDate(iso, long) {
+    var p = String(iso).split('-');
+    var d = new Date(+p[0], +p[1] - 1, +p[2]);
+    if (isNaN(d)) return esc(iso);
+    return d.toLocaleDateString(undefined, long ? { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' } : { weekday: 'short', month: 'short', day: 'numeric' });
+  }
+  function num(v, fallback) { var n = Number(v); return (v === '' || v == null || !isFinite(n)) ? fallback : n; }
+  function teamColor(i) { return 'var(--team' + (i % 6) + ')'; }
+  function teamLabel(i) { return 'Team ' + (i + 1); }
+  function isIOS() { return /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Mac/.test(navigator.platform)); }
+
+  /* ---------------- data model ---------------- */
+  function defaultSettings() {
+    var c = E.DEFAULT_CONFIG;
+    return { mu: c.mu, sigma: c.sigma, beta: c.beta, tau: c.tau, drawProbability: c.drawProbability,
+      minMargin: c.minMargin, maxMargin: c.maxMargin, maxWeight: c.maxWeight, sigmaFloor: c.sigmaFloor,
+      provisionalGames: c.provisionalGames };
+  }
+
+  function emptyState() {
+    return { app: APP_ID, version: SCHEMA_VERSION, settings: defaultSettings(), gameTypes: clone(DEFAULT_GAME_TYPES),
+      players: [], games: [], prefs: { lastTeams: null, lastTypeId: null, showInactive: false, draft: null, demo: false } };
+  }
+
+  // Validates and normalizes stored or imported JSON. Future schema
+  // migrations go here (switch on d.version).
+  function normalize(d) {
+    if (!d || typeof d !== 'object') throw new Error('Not a valid backup file.');
+    if (d.app && d.app !== APP_ID) throw new Error('This file is not a Frisbee TrueSkill backup.');
+    var v = Number(d.version);
+    if (!v) throw new Error('Backup has no version number.');
+    if (v > SCHEMA_VERSION) throw new Error('Backup was made by a newer app version (schema v' + v + ').');
+    if (!Array.isArray(d.players) || !Array.isArray(d.games)) throw new Error('Backup is missing players or games.');
+    var s = emptyState();
+    var defaults = defaultSettings();
+    for (var k in defaults) {
+      if (d.settings && typeof d.settings[k] === 'number' && isFinite(d.settings[k])) s.settings[k] = d.settings[k];
+    }
+    if (Array.isArray(d.gameTypes) && d.gameTypes.length) {
+      s.gameTypes = d.gameTypes.filter(function (t) { return t && t.id != null; }).map(function (t) {
+        return { id: String(t.id), name: String(t.name || 'Untitled'), weight: num(t.weight, 1), target: num(t.target, 15) };
+      });
+    }
+    var typeTargets = {};
+    s.gameTypes.forEach(function (t) { typeTargets[t.id] = t.target; });
+    s.players = d.players.filter(function (p) { return p && p.id != null; }).map(function (p) {
+      return { id: String(p.id), name: String(p.name || 'Unnamed'), active: p.active !== false, createdAt: num(p.createdAt, 0) };
+    });
+    s.games = d.games.filter(function (g) { return g && g.id != null; }).map(function (g) {
+      var date = String(g.date || '').slice(0, 10);
+      if (!DATE_RE.test(date)) throw new Error('Game ' + g.id + ' has an invalid date.');
+      return {
+        id: String(g.id), date: date, createdAt: num(g.createdAt, 0), typeId: String(g.typeId || ''),
+        scoringTarget: num(g.scoringTarget, typeTargets[g.typeId] || 0),
+        teams: (Array.isArray(g.teams) ? g.teams : []).map(function (t) {
+          return { playerIds: (Array.isArray(t.playerIds) ? t.playerIds : []).map(String), score: num(t.score, NaN) };
+        }),
+        notes: String(g.notes || '')
+      };
+    });
+    if (d.prefs && typeof d.prefs === 'object') {
+      s.prefs.lastTeams = Array.isArray(d.prefs.lastTeams) ? d.prefs.lastTeams : null;
+      s.prefs.lastTypeId = d.prefs.lastTypeId || null;
+      s.prefs.showInactive = !!d.prefs.showInactive;
+      s.prefs.draft = d.prefs.draft || null;
+      s.prefs.demo = !!d.prefs.demo;
+    }
+    return s;
+  }
+
+  /* ---------------- storage ---------------- */
+  var state;
+  var cache = null;
+
+  function persist() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); return true; }
+    catch (e) { toast('Could not save on this device (storage full or blocked). Export a backup!', true); return false; }
+  }
+  function commit() { cache = null; persist(); }
+  function loadState() {
+    var raw = null;
+    try { raw = localStorage.getItem(STORAGE_KEY); } catch (e) { return null; }
+    if (!raw) return null;
+    try { return normalize(JSON.parse(raw)); }
+    catch (e) {
+      // Keep the unreadable copy instead of silently overwriting it.
+      try { localStorage.setItem(STORAGE_KEY + '.unreadable-' + Date.now(), raw); } catch (e2) {}
+      setTimeout(function () { toast('Saved data could not be read; a copy was kept. Starting fresh.', true); }, 300);
+      return null;
+    }
+  }
+
+  /* ---------------- derived data ---------------- */
+  function computed() {
+    if (cache) return cache;
+    var rep = E.replayHistory({ players: state.players, games: state.games, gameTypes: state.gameTypes, settings: state.settings });
+    cache = { rep: rep };
+    return cache;
+  }
+  function playerById(id) { for (var i = 0; i < state.players.length; i++) if (state.players[i].id === id) return state.players[i]; return null; }
+  function typeById(id) { for (var i = 0; i < state.gameTypes.length; i++) if (state.gameTypes[i].id === id) return state.gameTypes[i]; return null; }
+  function gameById(id) { for (var i = 0; i < state.games.length; i++) if (state.games[i].id === id) return state.games[i]; return null; }
+  function playerName(id) { var p = playerById(id); return p ? p.name : '(removed)'; }
+  function typeName(id) { var t = typeById(id); return t ? t.name : 'Unknown type'; }
+  function ratingOf(id) {
+    var r = computed().rep.ratings[id];
+    return r || { mu: state.settings.mu, sigma: state.settings.sigma, games: 0, wins: 0, losses: 0, draws: 0 };
+  }
+
+  function rankings(includeInactive) {
+    var rep = computed().rep;
+    var dates = [];
+    rep.order.forEach(function (id) { var g = gameById(id); if (g && dates.indexOf(g.date) < 0) dates.push(g.date); });
+    dates.sort();
+    var latest = dates[dates.length - 1] || null;
+    var prevDate = dates[dates.length - 2] || null;
+    var rows = state.players.filter(function (p) { return includeInactive || p.active; }).map(function (p) {
+      var r = ratingOf(p.id);
+      return { player: p, r: r, skill: E.conservativeSkill(r) };
+    });
+    var rated = rows.filter(function (x) { return x.r.games > 0; }).sort(function (a, b) {
+      return (b.skill - a.skill) || (b.r.mu - a.r.mu) || a.player.name.localeCompare(b.player.name);
+    });
+    var unrated = rows.filter(function (x) { return x.r.games === 0; });
+    // Ranking as it stood at the end of the previous session date.
+    var prev = [];
+    if (latest) rated.forEach(function (x) {
+      var b = E.ratingBefore(rep.timeline[x.player.id] || [], latest);
+      if (b) prev.push({ id: x.player.id, skill: b.skill, mu: b.mu });
+    });
+    prev.sort(function (a, b) { return (b.skill - a.skill) || (b.mu - a.mu); });
+    var prevRank = {};
+    prev.forEach(function (x, i) { prevRank[x.id] = i + 1; });
+    rated.forEach(function (x, i) {
+      x.rank = i + 1;
+      x.prevRank = prevRank[x.player.id] || null;
+      x.provisional = x.r.games < state.settings.provisionalGames;
+    });
+    return { rated: rated, unrated: unrated, latest: latest, prevDate: prevDate, hasPrev: prev.length > 0 };
+  }
+
+  /* ---------------- record form ---------------- */
+  var recordForm = null; // new game (persisted as a draft)
+  var editForm = null;   // editing an existing game
+
+  function blankTeam() { return { playerIds: [], score: '' }; }
+  function newForm() {
+    var t = typeById(state.prefs.lastTypeId) || state.gameTypes[0] || null;
+    return { editingId: null, typeId: t ? t.id : null, date: todayISO(), target: t ? String(t.target) : '15',
+      targetTouched: false, teams: [blankTeam(), blankTeam()], active: 0, notes: '' };
+  }
+  function formFromGame(g) {
+    return { editingId: g.id, typeId: g.typeId, date: g.date, target: String(g.scoringTarget), targetTouched: true,
+      teams: g.teams.map(function (t) { return { playerIds: t.playerIds.slice(), score: String(t.score) }; }),
+      active: 0, notes: g.notes || '' };
+  }
+  function sanitizeDraft(d) {
+    try {
+      if (!d || !Array.isArray(d.teams) || d.teams.length < 2) return newForm();
+      var f = newForm();
+      if (typeById(d.typeId)) f.typeId = d.typeId;
+      f.target = d.target != null ? String(d.target) : f.target;
+      f.targetTouched = !!d.targetTouched;
+      f.notes = String(d.notes || '');
+      f.teams = d.teams.slice(0, MAX_TEAMS).map(function (t) {
+        return { playerIds: (t.playerIds || []).filter(function (id) { return playerById(id); }), score: t.score == null ? '' : String(t.score) };
+      });
+      var empty = f.teams.every(function (t) { return !t.playerIds.length && t.score === ''; });
+      f.date = (!empty && DATE_RE.test(d.date)) ? d.date : todayISO();
+      f.active = Math.min(Number(d.active) || 0, f.teams.length - 1);
+      return f;
+    } catch (e) { return newForm(); }
+  }
+  function currentForm() { return route.view === 'edit' ? editForm : recordForm; }
+  var draftTimer = null;
+  function saveDraftSoon() {
+    clearTimeout(draftTimer);
+    draftTimer = setTimeout(function () { state.prefs.draft = recordForm; persist(); }, 300);
+  }
+
+  function formWeightText(f) {
+    var t = typeById(f.typeId);
+    if (!t) return '';
+    var scores = f.teams.map(function (x) { return x.score; });
+    var target = num(f.target, t.target);
+    if (scores.some(function (s) { return s === '' || !isFinite(Number(s)); })) {
+      return 'Type weight ' + fx(t.weight, 2) + ' · enter scores to see the game weight';
+    }
+    var mf = E.computeMarginFactor(scores.map(Number), target, state.settings);
+    var w = E.effectiveWeight(t.weight, mf.factor, state.settings);
+    return 'Game weight: ' + fx(t.weight, 2) + ' × margin ' + fx(mf.factor, 2) + (mf.isDraw ? ' (draw)' : '') + ' = <b>' + fx(w, 2) + '</b>';
+  }
+
+  function validateForm(f) {
+    if (!typeById(f.typeId)) return 'Pick a game type.';
+    if (!DATE_RE.test(f.date)) return 'Pick a date.';
+    var target = Number(f.target);
+    if (f.target === '' || !isFinite(target) || target < 1) return 'Enter what the game was played to (1 or more).';
+    if (f.teams.length < 2) return 'A game needs at least 2 teams.';
+    for (var i = 0; i < f.teams.length; i++) {
+      if (!f.teams[i].playerIds.length) return teamLabel(i) + ' has no players.';
+      var s = f.teams[i].score;
+      if (s === '' || !isFinite(Number(s))) return 'Enter a score for ' + teamLabel(i) + '.';
+      if (Number(s) < 0) return teamLabel(i) + "'s score can't be negative.";
+    }
+    return null;
+  }
+
+  function saveForm() {
+    var f = currentForm();
+    var err = validateForm(f);
+    var errEl = document.getElementById('form-error');
+    if (err) { if (errEl) errEl.textContent = err; toast(err, true); return; }
+    var existing = f.editingId ? gameById(f.editingId) : null;
+    var game = {
+      id: existing ? existing.id : uid('g_'),
+      date: f.date,
+      createdAt: existing ? existing.createdAt : Date.now(),
+      typeId: f.typeId,
+      scoringTarget: Number(f.target),
+      teams: f.teams.map(function (t) { return { playerIds: t.playerIds.slice(), score: Number(t.score) }; }),
+      notes: f.notes.trim()
+    };
+    if (existing) state.games[state.games.indexOf(existing)] = game;
+    else state.games.push(game);
+    state.prefs.lastTeams = game.teams.map(function (t) { return t.playerIds.slice(); });
+    state.prefs.lastTypeId = game.typeId;
+    if (existing) {
+      editForm = null;
+      commit();
+      toast('Game updated — all ratings recalculated');
+      go('#history');
+      return;
+    }
+    var keepDate = f.date, keepType = f.typeId;
+    recordForm = newForm();
+    recordForm.date = keepDate;
+    recordForm.typeId = keepType;
+    recordForm.target = String(typeById(keepType).target);
+    state.prefs.draft = null;
+    commit();
+    var order = game.teams.map(function (t, i) { return { i: i, s: t.score }; }).sort(function (a, b) { return b.s - a.s; });
+    toast('Saved: ' + order.map(function (o) { return teamLabel(o.i) + ' ' + o.s; }).join(' – ') + '. Rankings updated.');
+    render();
+    window.scrollTo(0, 0);
+  }
+
+  /* ---------------- toast ---------------- */
+  var toastTimer = null;
+  function toast(msg, bad) {
+    var el = document.getElementById('toast');
+    el.textContent = msg;
+    el.className = 'toast show' + (bad ? ' bad' : '');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.className = 'toast' + (bad ? ' bad' : ''); }, bad ? 4000 : 2600);
+  }
+
+  /* ---------------- routing ---------------- */
+  var route = { view: 'rankings', arg: null };
+  var TITLES = { rankings: 'Rankings', record: 'Record game', history: 'History', roster: 'Roster', settings: 'Settings', player: 'Player', edit: 'Edit game' };
+  var TAB_OF = { rankings: 'rankings', record: 'record', history: 'history', roster: 'roster', player: 'rankings', edit: 'history', settings: null };
+
+  function parseHash() {
+    var h = (location.hash || '').replace(/^#/, '') || 'rankings';
+    var i = h.indexOf('/');
+    var view = i < 0 ? h : h.slice(0, i);
+    var arg = i < 0 ? null : decodeURIComponent(h.slice(i + 1));
+    if (!TITLES[view]) view = 'rankings';
+    return { view: view, arg: arg };
+  }
+  function go(hash) { if (location.hash === hash) onRoute(); else location.hash = hash; }
+  function onRoute() {
+    var r = parseHash();
+    var changed = r.view !== route.view || r.arg !== route.arg;
+    route.view = r.view; route.arg = r.arg;
+    if (route.view === 'edit') {
+      var g = gameById(route.arg);
+      if (!g) { go('#history'); return; }
+      if (!editForm || editForm.editingId !== g.id) editForm = formFromGame(g);
+    } else {
+      editForm = null;
+    }
+    render();
+    if (changed) window.scrollTo(0, 0);
+  }
+
+  function render() {
+    document.getElementById('title').textContent = TITLES[route.view];
+    document.getElementById('back-btn').hidden = !(route.view === 'player' || route.view === 'edit' || route.view === 'settings');
+    document.getElementById('settings-btn').style.visibility = route.view === 'settings' ? 'hidden' : '';
+    var tab = TAB_OF[route.view];
+    Array.prototype.forEach.call(document.querySelectorAll('nav.tabbar a'), function (a) {
+      a.classList.toggle('on', a.getAttribute('data-tab') === tab);
+    });
+    var html;
+    switch (route.view) {
+      case 'record': html = viewRecord(recordForm); break;
+      case 'edit': html = viewRecord(editForm); break;
+      case 'history': html = viewHistory(); break;
+      case 'roster': html = viewRoster(); break;
+      case 'player': html = viewPlayer(route.arg); break;
+      case 'settings': html = viewSettings(); break;
+      default: html = viewRankings();
+    }
+    document.getElementById('view').innerHTML = html;
+  }
+
+  /* ---------------- views: rankings ---------------- */
+  function viewRankings() {
+    var R = rankings(state.prefs.showInactive);
+    var rep = computed().rep;
+    var h = '';
+    if (state.prefs.demo) {
+      h += '<div class="banner"><span class="grow">You are looking at <b>demo data</b>. Clear it in Settings → Data when you are ready.</span>' +
+        '<button class="x" data-act="dismiss-demo" aria-label="Dismiss">×</button></div>';
+    }
+    if (rep.errors.length) {
+      h += '<div class="banner" style="background:var(--card2)"><span class="grow">' + rep.errors.length + ' game(s) could not be rated and were skipped. Check History.</span></div>';
+    }
+    if (!R.rated.length) {
+      h += '<div class="card empty"><p><b>No rated games yet.</b></p><p class="muted">Add players in Roster, then record a game.</p>' +
+        '<a class="btn primary" href="#record">Record a game</a></div>';
+    } else {
+      h += '<div class="sub">As of <b>' + fmtDate(R.latest) + '</b> · ' + rep.order.length + ' games' +
+        (R.prevDate ? ' · arrows: rank change since ' + fmtDate(R.prevDate) : '') + '</div>';
+      h += '<div class="table-wrap"><table class="rank"><thead><tr>' +
+        '<th>#</th><th class="name">Player</th><th>Skill</th><th>μ</th><th>σ</th><th>GP</th><th>W-L-D</th><th>±</th>' +
+        '</tr></thead><tbody>';
+      R.rated.forEach(function (x) {
+        var chg = '';
+        if (R.hasPrev) {
+          if (!x.prevRank) chg = '<span class="new">NEW</span>';
+          else {
+            var d = x.prevRank - x.rank;
+            chg = d > 0 ? '<span class="up">▲' + d + '</span>' : d < 0 ? '<span class="down">▼' + (-d) + '</span>' : '<span class="muted">–</span>';
+          }
+        }
+        h += '<tr data-href="#player/' + encodeURIComponent(x.player.id) + '"' + (x.player.active ? '' : ' class="inactive"') + '>' +
+          '<td>' + x.rank + '</td>' +
+          '<td class="name"><div class="nm">' + esc(x.player.name) + '</div>' +
+          (x.provisional ? '<div class="prov">Provisional</div>' : '') + (x.player.active ? '' : '<div class="prov muted">Inactive</div>') + '</td>' +
+          '<td class="sk">' + fx(x.skill, 1) + '</td>' +
+          '<td>' + fx(x.r.mu, 1) + '</td>' +
+          '<td>' + fx(x.r.sigma, 1) + '</td>' +
+          '<td>' + x.r.games + '</td>' +
+          '<td>' + x.r.wins + '-' + x.r.losses + '-' + x.r.draws + '</td>' +
+          '<td>' + chg + '</td></tr>';
+      });
+      h += '</tbody></table></div>';
+    }
+    if (R.unrated.length) {
+      h += '<div class="card"><div class="label">Not yet rated</div><div class="small">' +
+        R.unrated.map(function (x) { return '<a href="#player/' + encodeURIComponent(x.player.id) + '">' + esc(x.player.name) + '</a>'; }).join(', ') +
+        '</div></div>';
+    }
+    h += '<label class="switch"><input type="checkbox" data-change="toggle-inactive"' + (state.prefs.showInactive ? ' checked' : '') + '> Show inactive players</label>';
+    h += '<p class="small muted">Skill = μ − 3σ, a conservative estimate (we are ~99% sure true skill is higher). ' +
+      'Provisional = fewer than ' + state.settings.provisionalGames + ' rated games. In 3+ team games, W = finished first, L = finished last.</p>';
+    return h;
+  }
+
+  /* ---------------- views: record / edit ---------------- */
+  function viewRecord(f) {
+    if (!f) return '';
+    if (!state.gameTypes.length) return '<div class="card empty">Add a game type in Settings first.</div>';
+    var h = '';
+    h += '<div class="card"><div class="label">Game type</div><div class="chips">';
+    state.gameTypes.forEach(function (t) {
+      h += '<button class="chip' + (t.id === f.typeId ? ' sel' : '') + '" data-act="type" data-id="' + esc(t.id) + '">' +
+        esc(t.name) + ' <small>×' + fx(t.weight, 2) + '</small></button>';
+    });
+    h += '</div><div class="grid2" style="margin-top:12px">' +
+      '<label class="f">Date<input type="date" data-field="date" value="' + esc(f.date) + '"></label>' +
+      '<label class="f">Played to<input type="number" inputmode="numeric" pattern="[0-9]*" min="1" data-field="target" value="' + esc(f.target) + '"></label>' +
+      '</div></div>';
+
+    if (!f.editingId) {
+      h += '<div class="quick">';
+      if (state.prefs.lastTeams && state.prefs.lastTeams.length) h += '<button class="btn" data-act="rematch">↻ Rematch</button>';
+      h += '<button class="btn" data-act="clear-form">Clear</button></div>';
+    }
+
+    var assigned = {};
+    f.teams.forEach(function (t, i) { t.playerIds.forEach(function (id) { assigned[id] = i; }); });
+
+    f.teams.forEach(function (t, i) {
+      var active = i === f.active;
+      h += '<div class="card team' + (active ? ' active' : '') + '" style="--tc:' + teamColor(i) + '" data-act="team-activate" data-i="' + i + '">' +
+        '<div class="team-head"><span class="dot"></span><b>' + teamLabel(i) + '</b><span class="muted small">' + t.playerIds.length + ' player' + (t.playerIds.length === 1 ? '' : 's') + '</span>' +
+        '<span class="grow"></span>' + (active ? '<span class="pill">Adding here</span>' : '') +
+        (f.teams.length > 2 ? '<button class="x" data-act="team-remove" data-i="' + i + '" aria-label="Remove ' + teamLabel(i) + '">×</button>' : '') +
+        '</div><div class="members">';
+      if (!t.playerIds.length) h += '<span class="muted small">' + (active ? 'Tap players below to add them here.' : 'Tap this team, then tap players.') + '</span>';
+      t.playerIds.forEach(function (id) {
+        h += '<button class="mchip" data-act="member-remove" data-i="' + i + '" data-id="' + esc(id) + '">' + esc(playerName(id)) + ' ×</button>';
+      });
+      h += '</div><div class="score"><span>Score</span>' +
+        '<button class="step" data-act="score-dec" data-i="' + i + '" aria-label="Decrease score">−</button>' +
+        '<input class="score-in" type="number" inputmode="numeric" pattern="[0-9]*" min="0" placeholder="–" data-field="score" data-i="' + i + '" value="' + esc(t.score) + '" aria-label="' + teamLabel(i) + ' score">' +
+        '<button class="step" data-act="score-inc" data-i="' + i + '" aria-label="Increase score">+</button></div></div>';
+    });
+    if (f.teams.length < MAX_TEAMS) h += '<button class="btn block" data-act="team-add" style="margin-bottom:12px">+ Add team</button>';
+
+    // Player pool: active players plus anyone already on a team.
+    var pool = state.players.filter(function (p) { return p.active || assigned[p.id] != null; })
+      .sort(function (a, b) { return a.name.localeCompare(b.name); });
+    h += '<div class="card"><div class="label">Players <span style="text-transform:none;font-weight:600">· tap to add to ' +
+      '<span style="color:' + teamColor(f.active) + '">' + teamLabel(f.active) + '</span></span></div><div class="pool">';
+    pool.forEach(function (p) {
+      var ti = assigned[p.id];
+      h += '<button class="pchip' + (ti != null ? ' on' : '') + '"' + (ti != null ? ' style="--tc:' + teamColor(ti) + '"' : '') +
+        ' data-act="pool" data-id="' + esc(p.id) + '"><span class="n">' + esc(p.name) + '</span>' + (ti != null ? '<span class="tn">T' + (ti + 1) + '</span>' : '') + '</button>';
+    });
+    if (!pool.length) h += '<span class="muted small">No active players yet.</span>';
+    h += '</div><button class="chip ghost pool-new" data-act="new-player">+ New player</button></div>';
+
+    h += '<div class="card"><label class="f">Notes (optional)<textarea data-field="notes" rows="2">' + esc(f.notes) + '</textarea></label></div>';
+    h += '<div class="weight" id="weight-preview">' + formWeightText(f) + '</div>';
+    h += '<div class="error" id="form-error"></div>';
+    h += '<button class="btn primary block big" data-act="save-game">' + (f.editingId ? 'Save changes' : 'Save game') + '</button>';
+    if (f.editingId) {
+      h += '<div class="quick" style="margin-top:12px"><button class="btn" data-act="back">Cancel</button>' +
+        '<button class="btn danger" data-act="delete-game">Delete game</button></div>';
+    }
+    return h;
+  }
+
+  /* ---------------- views: history ---------------- */
+  function viewHistory() {
+    var rep = computed().rep;
+    if (!state.games.length) {
+      return '<div class="card empty"><p><b>No games recorded.</b></p><a class="btn primary" href="#record">Record a game</a></div>';
+    }
+    var errById = {};
+    rep.errors.forEach(function (e) { errById[e.gameId] = e.error; });
+    var games = state.games.slice().sort(E.compareGames).reverse();
+    var h = '<p class="sub">' + state.games.length + ' games · tap a game to edit or delete it</p>';
+    var lastDate = null;
+    games.forEach(function (g) {
+      if (g.date !== lastDate) { h += '<h3 class="date">' + fmtDate(g.date, true) + '</h3>'; lastDate = g.date; }
+      var res = rep.results[g.id];
+      var ranks = res ? res.ranks : E.ranksFromScores(g.teams.map(function (t) { return t.score; }));
+      var idx = g.teams.map(function (t, i) { return i; }).sort(function (a, b) { return ranks[a] - ranks[b]; });
+      h += '<a class="card game" href="#edit/' + encodeURIComponent(g.id) + '"><div class="g-head"><b>' + esc(typeName(g.typeId)) + '</b>' +
+        '<span class="muted small">' + (res ? '#' + (res.index + 1) + ' · ' : '') + 'to ' + esc(g.scoringTarget) + (res ? ' · w ' + fx(res.weight, 2) : '') + '</span></div>';
+      idx.forEach(function (i) {
+        var t = g.teams[i];
+        var win = res && res.outcomes[i] === 'W';
+        h += '<div class="g-team' + (win ? ' win' : '') + '" style="--tc:' + teamColor(i) + '"><span class="dot"></span><span class="sc">' + esc(t.score) + '</span>' +
+          '<span class="names">' + t.playerIds.map(function (id) { return esc(playerName(id)); }).join(', ') + '</span></div>';
+      });
+      if (g.notes) h += '<div class="g-notes">' + esc(g.notes) + '</div>';
+      if (errById[g.id]) h += '<div class="error" style="margin:6px 0 0">Not rated: ' + esc(errById[g.id]) + '</div>';
+      h += '</a>';
+    });
+    return h;
+  }
+
+  /* ---------------- views: roster ---------------- */
+  function viewRoster() {
+    var h = '<form class="card addp" data-form="add-player"><input name="name" placeholder="New player name" autocomplete="off" autocapitalize="words" enterkeyhint="done" maxlength="40">' +
+      '<button class="btn primary" type="submit">Add</button></form>';
+    var players = state.players.slice().sort(function (a, b) { return (b.active - a.active) || a.name.localeCompare(b.name); });
+    if (!players.length) return h + '<div class="card empty muted">No players yet. Add your team above.</div>';
+    var active = players.filter(function (p) { return p.active; }).length;
+    h += '<p class="sub">' + active + ' active · ' + (players.length - active) + ' inactive</p><div class="card" style="padding:0 12px">';
+    players.forEach(function (p) {
+      var r = ratingOf(p.id);
+      h += '<div class="li' + (p.active ? '' : ' inactive') + '"><a class="li-main" href="#player/' + encodeURIComponent(p.id) + '"><div class="nm">' + esc(p.name) + '</div>' +
+        '<div class="small muted">' + (p.active ? '' : 'Inactive · ') + r.games + ' games' + (r.games ? ' · skill ' + fx(E.conservativeSkill(r), 1) : '') + '</div></a>' +
+        '<button class="btn sm" data-act="rename" data-id="' + esc(p.id) + '">Rename</button>' +
+        '<button class="btn sm" data-act="toggle-active" data-id="' + esc(p.id) + '">' + (p.active ? 'Deactivate' : 'Activate') + '</button>' +
+        (r.games === 0 ? '<button class="btn sm danger" data-act="delete-player" data-id="' + esc(p.id) + '" aria-label="Delete">✕</button>' : '') +
+        '</div>';
+    });
+    h += '</div><p class="small muted">Deactivated players keep their history but are hidden from rankings and the Record screen. Players with no games can be deleted.</p>';
+    return h;
+  }
+
+  /* ---------------- views: player ---------------- */
+  function skillChart(points, cfg) {
+    var W = 340, H = 190, L = 30, R = 8, T = 10, B = 22;
+    var start = { skill: cfg.mu - 3 * cfg.sigma, mu: cfg.mu };
+    var pts = [start].concat(points);
+    var vals = [];
+    pts.forEach(function (p) { vals.push(p.skill, p.mu); });
+    var lo = Math.floor(Math.min.apply(null, vals) / 5) * 5, hi = Math.ceil(Math.max.apply(null, vals) / 5) * 5;
+    if (hi - lo < 10) hi = lo + 10;
+    var step = (hi - lo) > 30 ? 10 : 5;
+    function X(i) { return L + (pts.length === 1 ? 0 : i * (W - L - R) / (pts.length - 1)); }
+    function Y(v) { return T + (hi - v) * (H - T - B) / (hi - lo); }
+    var s = '<svg class="chart" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Skill over time">';
+    for (var v = lo; v <= hi; v += step) {
+      s += '<line class="grid" x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(v) + '" y2="' + Y(v) + '"/>' +
+        '<text class="axis" x="' + (L - 4) + '" y="' + (Y(v) + 3) + '" text-anchor="end">' + v + '</text>';
+    }
+    var dSkill = '', dMu = '';
+    pts.forEach(function (p, i) {
+      dSkill += (i ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(p.skill).toFixed(1);
+      dMu += (i ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(p.mu).toFixed(1);
+    });
+    s += '<path class="mu" d="' + dMu + '"/><path class="skill" d="' + dSkill + '"/>';
+    if (pts.length <= 40) pts.forEach(function (p, i) { if (i) s += '<circle class="pt" cx="' + X(i).toFixed(1) + '" cy="' + Y(p.skill).toFixed(1) + '" r="2.5"/>'; });
+    s += '<text class="axis" x="' + L + '" y="' + (H - 6) + '">start</text>';
+    if (points.length) s += '<text class="axis" x="' + (W - R) + '" y="' + (H - 6) + '" text-anchor="end">' + esc(fmtDate(points[points.length - 1].date)) + '</text>';
+    s += '</svg><div class="legend"><span style="color:var(--accent)">━ Skill (μ−3σ)</span><span>┅ μ</span><span>one point per game</span></div>';
+    return s;
+  }
+
+  function viewPlayer(id) {
+    var p = playerById(id);
+    if (!p) return '<div class="card empty muted">Player not found.</div>';
+    var rep = computed().rep;
+    var r = ratingOf(id);
+    var tl = rep.timeline[id] || [];
+    var R = rankings(true);
+    var rankRow = null;
+    R.rated.forEach(function (x) { if (x.player.id === id) rankRow = x; });
+    var activeRank = null;
+    rankings(false).rated.forEach(function (x) { if (x.player.id === id) activeRank = x.rank; });
+    var h = '<h2 class="pname">' + esc(p.name) +
+      (r.games < state.settings.provisionalGames ? '<span class="badge">Provisional</span>' : '') +
+      (p.active ? '' : '<span class="badge" style="color:var(--muted)">Inactive</span>') + '</h2>';
+    h += '<div class="stats">' +
+      '<div class="stat"><div class="v">' + fx(E.conservativeSkill(r), 1) + '</div><div class="k">Skill</div></div>' +
+      '<div class="stat"><div class="v">' + (activeRank ? '#' + activeRank : '–') + '</div><div class="k">Rank</div></div>' +
+      '<div class="stat"><div class="v">' + r.games + '</div><div class="k">Games</div></div>' +
+      '<div class="stat"><div class="v">' + fx(r.mu, 2) + '</div><div class="k">μ (mean)</div></div>' +
+      '<div class="stat"><div class="v">' + fx(r.sigma, 2) + '</div><div class="k">σ (uncertainty)</div></div>' +
+      '<div class="stat"><div class="v">' + r.wins + '-' + r.losses + '-' + r.draws + '</div><div class="k">W-L-D</div></div></div>';
+    h += '<div class="card"><div class="label">Skill over time</div>' +
+      (tl.length ? skillChart(tl, state.settings) : '<p class="muted small">No games yet.</p>') + '</div>';
+    if (tl.length) {
+      h += '<div class="card"><div class="label">Recent games</div>';
+      tl.slice(-15).reverse().forEach(function (e) {
+        var g = gameById(e.gameId);
+        var res = rep.results[e.gameId];
+        if (!g || !res) return;
+        var myTeam = -1;
+        g.teams.forEach(function (t, i) { if (t.playerIds.indexOf(id) >= 0) myTeam = i; });
+        var others = g.teams.filter(function (t, i) { return i !== myTeam; }).map(function (t) { return t.score; });
+        var o = res.outcomes[myTeam];
+        var label = o === 'W' ? 'W' : o === 'L' ? 'L' : o === 'D' ? 'D' : (res.ranks[myTeam] + 1) + ordinal(res.ranks[myTeam] + 1);
+        var color = o === 'W' ? 'var(--good)' : o === 'L' ? 'var(--bad)' : 'var(--muted)';
+        var mates = g.teams[myTeam].playerIds.filter(function (x) { return x !== id; }).map(playerName);
+        h += '<a class="rg" href="#edit/' + encodeURIComponent(g.id) + '"><span class="res" style="color:' + color + '">' + label + '</span>' +
+          '<div class="mid"><div><b>' + esc(g.teams[myTeam].score) + '–' + others.join('–') + '</b> · ' + esc(typeName(g.typeId)) + '</div>' +
+          '<div class="small muted">' + fmtDate(g.date) + (mates.length ? ' · with ' + esc(mates.join(', ')) : '') + '</div></div>' +
+          '<span class="dl ' + (e.deltaSkill > 0.005 ? 'up' : e.deltaSkill < -0.005 ? 'down' : 'muted') + '">' + signed(e.deltaSkill, 2) + '</span></a>';
+      });
+      h += '</div>';
+    }
+    return h;
+  }
+  function ordinal(n) { return (n % 10 === 1 && n % 100 !== 11) ? 'st' : (n % 10 === 2 && n % 100 !== 12) ? 'nd' : (n % 10 === 3 && n % 100 !== 13) ? 'rd' : 'th'; }
+
+  /* ---------------- views: settings ---------------- */
+  var SETTING_FIELDS = [
+    { key: 'drawProbability', label: 'Draw probability', desc: 'Chance two even teams tie (TrueSkill draw margin)', min: 0.01, max: 0.5, step: 0.01 },
+    { key: 'minMargin', label: 'Margin factor min', desc: 'Multiplier for a 1-point game', min: 0, max: 3, step: 0.05 },
+    { key: 'maxMargin', label: 'Margin factor max', desc: 'Multiplier for a shutout', min: 0, max: 3, step: 0.05 },
+    { key: 'provisionalGames', label: 'Provisional below', desc: 'Rated games before a player is established', min: 0, max: 100, step: 1, int: true }
+  ];
+  var ADVANCED_FIELDS = [
+    { key: 'mu', label: 'Initial μ', min: -1000, max: 1000, step: 0.5 },
+    { key: 'sigma', label: 'Initial σ', min: 0.01, max: 1000, step: 0.1 },
+    { key: 'beta', label: 'β (performance noise)', min: 0.01, max: 1000, step: 0.1 },
+    { key: 'tau', label: 'τ (skill drift per game)', min: 0, max: 100, step: 0.01 },
+    { key: 'sigmaFloor', label: 'σ floor', min: 0.01, max: 100, step: 0.1 },
+    { key: 'maxWeight', label: 'Max effective weight', min: 0, max: 5, step: 0.05 }
+  ];
+  function settingRow(fd) {
+    return '<div class="set-row"><div><div>' + fd.label + '</div>' + (fd.desc ? '<div class="desc">' + fd.desc + '</div>' : '') + '</div>' +
+      '<input type="number" inputmode="decimal" step="' + fd.step + '" min="' + fd.min + '" max="' + fd.max + '" data-setting="' + fd.key + '" value="' + esc(+state.settings[fd.key].toFixed(6)) + '"></div>';
+  }
+  function viewSettings() {
+    var h = '<div class="card"><div class="label">Game types</div>';
+    state.gameTypes.forEach(function (t) {
+      h += '<div class="type-row">' +
+        '<label class="f tname">Name<input data-type-id="' + esc(t.id) + '" data-type-field="name" value="' + esc(t.name) + '" maxlength="40"></label>' +
+        '<label class="f">Weight<input type="number" inputmode="decimal" step="0.05" min="0" max="3" data-type-id="' + esc(t.id) + '" data-type-field="weight" value="' + esc(t.weight) + '"></label>' +
+        '<label class="f">To<input type="number" inputmode="numeric" min="1" data-type-id="' + esc(t.id) + '" data-type-field="target" value="' + esc(t.target) + '"></label>' +
+        '<button class="x" data-act="delete-type" data-id="' + esc(t.id) + '" aria-label="Delete ' + esc(t.name) + '">✕</button></div>';
+    });
+    h += '<button class="btn block" data-act="add-type" style="margin-top:8px">+ Add game type</button>' +
+      '<p class="small muted">Weight scales how much a game moves ratings (Full field = 1.0). "To" is the default score target; each game keeps its own target. Changing a weight recalculates all history.</p></div>';
+
+    h += '<div class="card"><div class="label">Rating</div>';
+    SETTING_FIELDS.forEach(function (fd) { h += settingRow(fd); });
+    h += '<details><summary>Advanced TrueSkill parameters</summary>';
+    ADVANCED_FIELDS.forEach(function (fd) { h += settingRow(fd); });
+    h += '<button class="btn block" data-act="reset-params" style="margin:8px 0">Reset rating parameters to defaults</button></details>' +
+      '<p class="small muted">Game weight = type weight × margin factor, clamped to [0, ' + fx(state.settings.maxWeight, 2) + ']. Every change replays all games from scratch.</p></div>';
+
+    h += '<div class="card stack"><div class="label">Data</div>' +
+      '<button class="btn block" data-act="export">Export backup (JSON)</button>' +
+      '<button class="btn block" data-act="copy-json">Copy backup to clipboard</button>' +
+      '<button class="btn block" data-act="import">Import backup…</button>' +
+      '<button class="btn block" data-act="load-demo">Load demo data</button>' +
+      '<button class="btn block danger" data-act="reset-all">Erase all players &amp; games…</button>' +
+      '<p class="small muted">Data lives only on this device, in this browser. On iPhone, the Home Screen app and Safari keep <b>separate</b> storage — use Export/Import to move data between them, and export regularly as a backup.</p></div>';
+    h += '<p class="small muted" style="text-align:center">Schema v' + SCHEMA_VERSION + ' · ' + state.players.length + ' players · ' + state.games.length + ' games</p>';
+    return h;
+  }
+
+  /* ---------------- actions ---------------- */
+  function assignPlayer(f, id) {
+    var from = -1;
+    f.teams.forEach(function (t, i) { if (t.playerIds.indexOf(id) >= 0) from = i; });
+    if (from >= 0) f.teams[from].playerIds.splice(f.teams[from].playerIds.indexOf(id), 1);
+    if (from !== f.active) f.teams[f.active].playerIds.push(id);
+  }
+
+  function formChanged() { if (route.view === 'record') saveDraftSoon(); render(); }
+
+  function addPlayer(name) {
+    name = String(name || '').trim().replace(/\s+/g, ' ');
+    if (!name) return null;
+    var dup = state.players.some(function (p) { return p.name.toLowerCase() === name.toLowerCase(); });
+    if (dup && !confirm('There is already a player named "' + name + '". Add another?')) return null;
+    var p = { id: uid('p_'), name: name, active: true, createdAt: Date.now() };
+    state.players.push(p);
+    commit();
+    return p;
+  }
+
+  var actions = {
+    back: function () { if (history.length > 1) history.back(); else go('#rankings'); },
+    'dismiss-demo': function () { state.prefs.demo = false; persist(); render(); },
+    type: function (el) {
+      var f = currentForm(); var t = typeById(el.dataset.id); if (!t) return;
+      f.typeId = t.id;
+      if (!f.targetTouched) f.target = String(t.target);
+      formChanged();
+    },
+    'team-activate': function (el) { var f = currentForm(); var i = +el.dataset.i; if (f.active !== i) { f.active = i; formChanged(); } },
+    'team-add': function () {
+      var f = currentForm(); if (f.teams.length >= MAX_TEAMS) return;
+      f.teams.push(blankTeam()); f.active = f.teams.length - 1; formChanged();
+    },
+    'team-remove': function (el) {
+      var f = currentForm(); var i = +el.dataset.i; if (f.teams.length <= 2) return;
+      f.teams.splice(i, 1); f.active = Math.min(f.active, f.teams.length - 1); formChanged();
+    },
+    'score-inc': function (el) { var t = currentForm().teams[+el.dataset.i]; t.score = String(Math.max(0, Math.floor(num(t.score, 0)) + 1)); formChanged(); },
+    'score-dec': function (el) { var t = currentForm().teams[+el.dataset.i]; t.score = String(Math.max(0, Math.floor(num(t.score, 1)) - 1)); formChanged(); },
+    pool: function (el) { assignPlayer(currentForm(), el.dataset.id); formChanged(); },
+    'member-remove': function (el) {
+      var t = currentForm().teams[+el.dataset.i]; var k = t.playerIds.indexOf(el.dataset.id);
+      if (k >= 0) t.playerIds.splice(k, 1); formChanged();
+    },
+    rematch: function () {
+      var f = currentForm(); var last = state.prefs.lastTeams || [];
+      var teams = last.map(function (ids) { return { playerIds: ids.filter(function (id) { return playerById(id); }), score: '' }; });
+      while (teams.length < 2) teams.push(blankTeam());
+      f.teams = teams.slice(0, MAX_TEAMS); f.active = 0;
+      var t = typeById(state.prefs.lastTypeId);
+      if (t) { f.typeId = t.id; if (!f.targetTouched) f.target = String(t.target); }
+      formChanged(); toast('Loaded last teams');
+    },
+    'clear-form': function () {
+      var keep = recordForm; recordForm = newForm();
+      if (keep) { recordForm.typeId = keep.typeId; recordForm.date = keep.date; recordForm.target = String((typeById(keep.typeId) || {}).target || recordForm.target); }
+      formChanged();
+    },
+    'new-player': function () {
+      var name = prompt('New player name');
+      var p = addPlayer(name);
+      if (p) { var f = currentForm(); f.teams[f.active].playerIds.push(p.id); formChanged(); toast(p.name + ' added to ' + teamLabel(f.active)); }
+    },
+    'save-game': saveForm,
+    'delete-game': function () {
+      var f = currentForm(); if (!f || !f.editingId) return;
+      if (!confirm('Delete this game? All ratings will be recalculated without it.')) return;
+      state.games = state.games.filter(function (g) { return g.id !== f.editingId; });
+      editForm = null; commit(); toast('Game deleted — ratings recalculated'); go('#history');
+    },
+    rename: function (el) {
+      var p = playerById(el.dataset.id); if (!p) return;
+      var name = prompt('Rename player', p.name);
+      if (name == null) return;
+      name = name.trim().replace(/\s+/g, ' ');
+      if (!name) return;
+      p.name = name; commit(); render();
+    },
+    'toggle-active': function (el) {
+      var p = playerById(el.dataset.id); if (!p) return;
+      p.active = !p.active; commit(); render(); toast(p.name + (p.active ? ' activated' : ' deactivated'));
+    },
+    'delete-player': function (el) {
+      var p = playerById(el.dataset.id); if (!p) return;
+      if (ratingOf(p.id).games > 0) { toast('Players with games can only be deactivated', true); return; }
+      if (!confirm('Delete ' + p.name + '?')) return;
+      state.players = state.players.filter(function (x) { return x.id !== p.id; });
+      if (recordForm) recordForm.teams.forEach(function (t) { t.playerIds = t.playerIds.filter(function (id) { return id !== p.id; }); });
+      commit(); render();
+    },
+    'add-type': function () {
+      state.gameTypes.push({ id: uid('t_'), name: 'New drill', weight: 0.4, target: 10 });
+      commit(); render();
+      var inputs = document.querySelectorAll('[data-type-field="name"]');
+      if (inputs.length) { inputs[inputs.length - 1].focus(); inputs[inputs.length - 1].select(); }
+    },
+    'delete-type': function (el) {
+      var id = el.dataset.id;
+      var used = state.games.filter(function (g) { return g.typeId === id; }).length;
+      if (used) { toast('Used by ' + used + ' game' + (used === 1 ? '' : 's') + ' — rename it instead', true); return; }
+      if (state.gameTypes.length <= 1) { toast('Keep at least one game type', true); return; }
+      if (!confirm('Delete game type "' + typeName(id) + '"?')) return;
+      state.gameTypes = state.gameTypes.filter(function (t) { return t.id !== id; });
+      [recordForm, editForm].forEach(function (f) { if (f && f.typeId === id) f.typeId = state.gameTypes[0].id; });
+      commit(); render();
+    },
+    'reset-params': function () {
+      if (!confirm('Reset all rating parameters to defaults? Ratings will be recalculated.')) return;
+      state.settings = defaultSettings(); commit(); render(); toast('Rating parameters reset');
+    },
+    export: function () { exportData(); },
+    'copy-json': function () {
+      var json = backupJSON();
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(json).then(function () { toast('Backup copied to clipboard'); }, function () { toast('Copy failed', true); });
+      } else toast('Clipboard not available here', true);
+    },
+    import: function () { document.getElementById('import-file').click(); },
+    'load-demo': function () {
+      if (state.games.length && !confirm('Replace ALL current players and games with demo data?')) return;
+      state = demoState(); recordForm = newForm(); editForm = null; commit(); go('#rankings'); toast('Demo data loaded');
+    },
+    'reset-all': function () {
+      var answer = prompt('This erases all ' + state.players.length + ' players and ' + state.games.length + ' games on this device (game types and settings are kept).\n\nType ERASE to confirm.');
+      if (answer == null) return;
+      if (answer.trim().toUpperCase() !== 'ERASE') { toast('Not erased — you must type ERASE', true); return; }
+      var keepTypes = state.gameTypes, keepSettings = state.settings;
+      state = emptyState(); state.gameTypes = keepTypes; state.settings = keepSettings;
+      recordForm = newForm(); editForm = null; commit(); go('#roster'); toast('All players and games erased');
+    }
+  };
+
+  function backupJSON() {
+    var data = clone(state);
+    data.exportedAt = new Date().toISOString();
+    return JSON.stringify(data, null, 2);
+  }
+  function exportData() {
+    var json = backupJSON();
+    var name = 'frisbee-trueskill-' + todayISO() + '.json';
+    var file = null;
+    try { file = new File([json], name, { type: 'application/json' }); } catch (e) {}
+    if (file && isIOS() && navigator.canShare && navigator.canShare({ files: [file] })) {
+      navigator.share({ files: [file], title: name }).catch(function (err) { if (err && err.name !== 'AbortError') download(json, name); });
+      return;
+    }
+    download(json, name);
+  }
+  function download(text, name) {
+    var url = URL.createObjectURL(new Blob([text], { type: 'application/json' }));
+    var a = document.createElement('a');
+    a.href = url; a.download = name; document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(url); a.remove(); }, 1000);
+    toast('Backup exported');
+  }
+  function importFile(file) {
+    var reader = new FileReader();
+    reader.onload = function () {
+      var data;
+      try { data = normalize(JSON.parse(reader.result)); }
+      catch (e) { toast('Import failed: ' + e.message, true); return; }
+      if (!confirm('Replace all data on this device with this backup?\n\n' + data.players.length + ' players, ' + data.games.length + ' games.')) return;
+      state = data; recordForm = sanitizeDraft(state.prefs.draft); editForm = null; commit();
+      var errs = computed().rep.errors.length;
+      go('#rankings');
+      toast('Imported ' + data.games.length + ' games' + (errs ? ' (' + errs + ' could not be rated)' : ''), !!errs);
+    };
+    reader.onerror = function () { toast('Could not read that file', true); };
+    reader.readAsText(file);
+  }
+
+  /* ---------------- events ---------------- */
+  document.addEventListener('click', function (e) {
+    var t = e.target;
+    if (t.closest('input, textarea, select, label.f, details summary')) return;
+    var el = t.closest('[data-act]');
+    if (el && actions[el.dataset.act]) { e.preventDefault(); actions[el.dataset.act](el); return; }
+    var row = t.closest('tr[data-href]');
+    if (row) go(row.getAttribute('data-href'));
+  });
+
+  document.addEventListener('input', function (e) {
+    var el = e.target, field = el.dataset && el.dataset.field;
+    if (!field) return;
+    var f = currentForm(); if (!f) return;
+    if (field === 'date') f.date = el.value;
+    else if (field === 'target') { f.target = el.value; f.targetTouched = true; }
+    else if (field === 'score') f.teams[+el.dataset.i].score = el.value;
+    else if (field === 'notes') f.notes = el.value;
+    var wp = document.getElementById('weight-preview'); if (wp) wp.innerHTML = formWeightText(f);
+    var fe = document.getElementById('form-error'); if (fe) fe.textContent = '';
+    if (route.view === 'record') saveDraftSoon();
+  });
+
+  document.addEventListener('change', function (e) {
+    var el = e.target;
+    if (el.id === 'import-file') { if (el.files && el.files[0]) importFile(el.files[0]); el.value = ''; return; }
+    if (el.dataset.change === 'toggle-inactive') { state.prefs.showInactive = el.checked; persist(); render(); return; }
+    if (el.dataset.setting) { changeSetting(el); return; }
+    if (el.dataset.typeField) { changeType(el); return; }
+  });
+
+  function changeSetting(el) {
+    var key = el.dataset.setting;
+    var fd = SETTING_FIELDS.concat(ADVANCED_FIELDS).filter(function (x) { return x.key === key; })[0];
+    var v = Number(el.value);
+    if (el.value === '' || !isFinite(v) || v < fd.min || v > fd.max || (fd.int && Math.floor(v) !== v)) {
+      toast(fd.label + ' must be ' + (fd.int ? 'a whole number ' : '') + 'between ' + fd.min + ' and ' + fd.max, true);
+      el.value = state.settings[key]; return;
+    }
+    var next = Object.assign({}, state.settings); next[key] = v;
+    if (next.minMargin > next.maxMargin) { toast('Margin min must not exceed margin max', true); el.value = state.settings[key]; return; }
+    state.settings = next; commit(); toast(fd.label + ' updated — ratings recalculated');
+  }
+
+  function changeType(el) {
+    var t = typeById(el.dataset.typeId); if (!t) return;
+    var field = el.dataset.typeField;
+    if (field === 'name') {
+      var name = el.value.trim();
+      if (!name) { toast('Name cannot be empty', true); el.value = t.name; return; }
+      t.name = name; commit(); return;
+    }
+    var v = Number(el.value);
+    if (field === 'weight' && (el.value === '' || !isFinite(v) || v < 0 || v > 3)) { toast('Weight must be between 0 and 3', true); el.value = t.weight; return; }
+    if (field === 'target' && (el.value === '' || !isFinite(v) || v < 1 || Math.floor(v) !== v)) { toast('Target must be a whole number ≥ 1', true); el.value = t.target; return; }
+    t[field] = v; commit();
+    toast(field === 'weight' ? 'Weight updated — ratings recalculated' : 'Default target updated (existing games keep theirs)');
+  }
+
+  document.addEventListener('submit', function (e) {
+    var form = e.target;
+    if (form.dataset.form === 'add-player') {
+      e.preventDefault();
+      var input = form.elements.name;
+      var p = addPlayer(input.value);
+      if (p) { render(); toast(p.name + ' added'); var again = document.querySelector('form.addp input'); if (again) again.focus(); }
+    }
+  });
+
+  window.addEventListener('hashchange', onRoute);
+
+  /* ---------------- demo data ---------------- */
+  // 12 players, 20 games over 5 sessions; includes 3-team and 4-team games,
+  // a draw, bonus points above target, and a player joining mid-season.
+  function demoState() {
+    var s = emptyState();
+    var names = ['Alex', 'Blake', 'Casey', 'Devon', 'Emery', 'Finley', 'Gray', 'Harper', 'Jordan', 'Kai', 'Logan', 'Morgan'];
+    s.players = names.map(function (n, i) {
+      return { id: 'demo-p' + (i + 1), name: n, active: true, createdAt: Date.parse(i < 11 ? '2026-09-01T12:00:00Z' : '2026-09-22T12:00:00Z') };
+    });
+    var G = [
+      { d: '2026-09-08', t: 'warmup', teams: [[[0, 1, 2, 3, 4, 5], 5], [[6, 7, 8, 9, 10], 3]] },
+      { d: '2026-09-08', t: 'drill', teams: [[[0, 2, 4], 10], [[1, 3, 5], 6]], n: '3v3 break-mark drill' },
+      { d: '2026-09-08', t: 'mini', teams: [[[0, 6, 9], 7], [[1, 4, 10], 5], [[2, 3, 7, 8], 2]], n: '3-team round robin, aggregated' },
+      { d: '2026-09-08', t: 'full7s', teams: [[[0, 2, 4, 6, 8], 15], [[1, 3, 5, 7, 9, 10], 11]] },
+      { d: '2026-09-15', t: 'warmup', teams: [[[0, 3, 6, 9, 1], 4], [[2, 5, 8, 10, 4], 5]] },
+      { d: '2026-09-15', t: 'mini', teams: [[[0, 1, 7], 7], [[2, 8, 9], 6]] },
+      { d: '2026-09-15', t: 'drill', teams: [[[4, 6, 10], 12], [[3, 5, 7], 7]], n: 'Bonus points for completed hucks (12 > target 10)' },
+      { d: '2026-09-15', t: 'full7s', teams: [[[0, 1, 4, 7, 9], 13], [[2, 3, 5, 6, 8, 10], 15]] },
+      { d: '2026-09-22', t: 'warmup', teams: [[[11, 0, 2, 5], 5], [[1, 3, 4, 6], 5]], n: 'Morgan’s first practice — draw' },
+      { d: '2026-09-22', t: 'mini', teams: [[[0, 4, 11], 7], [[1, 5, 8], 7], [[2, 6, 9, 10], 3]], n: '3 teams, top two tied' },
+      { d: '2026-09-22', t: 'drill', teams: [[[0, 7], 10], [[11, 3], 8]] },
+      { d: '2026-09-22', t: 'full7s', teams: [[[0, 3, 5, 8, 10, 11], 15], [[1, 2, 4, 6, 7, 9], 9]] },
+      { d: '2026-09-29', t: 'warmup', teams: [[[0, 1, 2], 5], [[3, 4, 5], 2]] },
+      { d: '2026-09-29', t: 'mini', teams: [[[0, 5, 10], 4], [[2, 7, 11], 7], [[1, 3, 9], 6]] },
+      { d: '2026-09-29', t: 'full7s', teams: [[[0, 2, 4, 6, 8, 10], 16], [[1, 3, 5, 7, 9, 11], 12]], n: 'Callahan bonus: 16 > target 15' },
+      { d: '2026-09-29', t: 'drill', teams: [[[4, 9], 10], [[6, 8], 3]] },
+      { d: '2026-10-06', t: 'warmup', teams: [[[0, 4, 8, 11], 5], [[1, 5, 9, 2], 4]] },
+      { d: '2026-10-06', t: 'mini', teams: [[[0, 3, 6], 7], [[1, 4, 7], 3]] },
+      { d: '2026-10-06', t: 'drill', teams: [[[0, 1], 10], [[2, 3], 7], [[4, 5], 9], [[6, 7], 4]], n: '4-pair cutting drill' },
+      { d: '2026-10-06', t: 'full7s', teams: [[[0, 1, 2, 3, 4, 5], 15], [[6, 7, 8, 9, 10, 11], 12]] }
+    ];
+    s.games = G.map(function (g, i) {
+      var type = s.gameTypes.filter(function (t) { return t.id === g.t; })[0];
+      return {
+        id: 'demo-g' + (i + 1), date: g.d, createdAt: Date.parse(g.d + 'T18:00:00Z') + i * 60000, typeId: g.t,
+        scoringTarget: type.target,
+        teams: g.teams.map(function (t) { return { playerIds: t[0].map(function (k) { return 'demo-p' + (k + 1); }), score: t[1] }; }),
+        notes: g.n || ''
+      };
+    });
+    var last = s.games[s.games.length - 1];
+    s.prefs.lastTeams = last.teams.map(function (t) { return t.playerIds.slice(); });
+    s.prefs.lastTypeId = last.typeId;
+    s.prefs.demo = true;
+    return s;
+  }
+
+  /* ---------------- install metadata ---------------- */
+  function setupManifest() {
+    try {
+      var icon = document.querySelector('link[rel="apple-touch-icon"]').href;
+      var manifest = {
+        name: 'Frisbee TrueSkill', short_name: 'TrueSkill', start_url: location.href.split('#')[0], scope: location.href.split('#')[0].replace(/[^/]*$/, ''),
+        display: 'standalone', background_color: '#0b0d10', theme_color: '#0f766e',
+        icons: [{ src: icon, sizes: '192x192', type: 'image/png', purpose: 'any' }]
+      };
+      document.getElementById('manifest-link').href = 'data:application/manifest+json,' + encodeURIComponent(JSON.stringify(manifest));
+    } catch (e) { /* non-essential */ }
+  }
+
+  /* ---------------- boot ---------------- */
+  state = loadState();
+  if (!state) { state = demoState(); persist(); }
+  recordForm = sanitizeDraft(state.prefs.draft);
+  setupManifest();
+  onRoute();
+
+  // Debug/test hook (read-only use).
+  window.__app = { get state() { return state; }, computed: computed, rankings: rankings, demoState: demoState, normalize: normalize };
+})();
+</script>
+</body>
+</html>
